@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './news-detail.component.scss'
 })
 export class NewsDetailComponent {
-
+  ativo: boolean = false;
 }

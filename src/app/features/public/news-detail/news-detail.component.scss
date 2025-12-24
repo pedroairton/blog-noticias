@@ -1,0 +1,97 @@
+.page-noticia {
+  width: 1280px;
+  .cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    .categoria {
+      font-size: 1.25rem;
+      color: #2c53af;
+      text-transform: uppercase;
+    }
+    .titulo-noticia {
+      font-size: 4.5rem;
+      font-weight: 600;
+    }
+    .subtitulo-noticia {
+      font-size: 2rem;
+      font-weight: 500;
+      color: #404040;
+    }
+    .detalhes {
+      display: flex;
+      flex-direction: column;
+      font-weight: 300;
+      gap: 4px;
+      position: relative;
+      b {
+        font-weight: 700;
+      }
+      .btn-compartilhar {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        button {
+          width: 55px;
+          height: 55px;
+          background-color: #2c53af;
+          padding: 0.5rem;
+          border-radius: 35px;
+          cursor: pointer;
+          transition: 0.3s;
+          position: relative;
+          z-index: 1;
+          &:hover {
+            background-color: #12244e;
+            scale: 1.05;
+          }
+        }
+        .itens {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2c53af93;
+            border-radius: 25px;
+            width: 20px;
+            height: 20px;
+            padding: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            &:hover {
+              scale: 1.05;
+            }
+          }
+        }
+      }
+      .btn-compartilhar.ativo {
+        .itens {
+          svg {
+            &:nth-child(1) {
+              translate: -45px 0;
+            }
+            &:nth-child(2) {
+              translate: -80px 0;
+            }
+            &:nth-child(3) {
+              translate: -115px 0;
+            }
+            &:nth-child(4) {
+              translate: -150px 0;
+            }
+            &:nth-child(5) {
+              translate: -185px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
