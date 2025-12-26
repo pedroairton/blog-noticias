@@ -1,0 +1,44 @@
+footer{
+    background-color: #2c53af;
+    color: white;
+    padding: 2rem 1rem;
+    .conteudo-footer{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        padding-bottom: 1rem;
+        .itens{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            .item{
+                font-size: 1.25rem;
+                transition: .3s;
+                &:hover{
+                    text-decoration: underline;
+                    scale: 1.05;
+                }
+            }
+        }
+        .redes{
+            display: flex;
+            gap: 0.75rem;
+            svg{
+                transition: .3s ease;
+                &:hover{
+                    scale: 1.1;
+                }
+            }
+        }
+    }
+    .copy{
+        padding-top: 1rem;
+        display: flex;
+        justify-content: center;
+        p{
+            font-size: 1rem;
+        }
+    }
+}
