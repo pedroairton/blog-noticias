@@ -3,11 +3,12 @@ section.page-home {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 80px;
   padding-top: 1rem;
   h1 {
     font-size: 3rem;
-    text-align: center;
+    display: flex;
     color: #2c53af;
   }
   .ultimas-noticias {
@@ -33,6 +34,11 @@ section.page-home {
       }
       .texto {
         color: #12244e;
+      }
+      .infos {
+        color: #2c53af;
+        font-weight: 500;
+        text-transform: uppercase;
       }
       .img-noticia {
         overflow: hidden;
@@ -82,6 +88,7 @@ section.page-home {
   .categorias {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
     .categoria {
       display: flex;
@@ -94,7 +101,7 @@ section.page-home {
         align-items: center;
         background-color: #d0d0d0;
         border-radius: 5px;
-        a{
+        a {
           display: flex;
           align-items: center;
           gap: 4px;
@@ -121,9 +128,14 @@ section.page-home {
           .texto {
             color: #12244e;
           }
-          &:hover{
-            .img-noticia{
-              img{
+          .infos {
+            color: #2c53af;
+            font-weight: 500;
+            text-transform: uppercase;
+          }
+          &:hover {
+            .img-noticia {
+              img {
                 scale: 1.05;
               }
             }
@@ -134,7 +146,7 @@ section.page-home {
             img {
               width: 100%;
               height: 100%;
-              transition: .3s;
+              transition: 0.3s;
             }
           }
         }
@@ -144,6 +156,7 @@ section.page-home {
   .mais-lidas {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
     .noticias {
       display: flex;
@@ -160,23 +173,28 @@ section.page-home {
           h2 {
             color: #12244e;
           }
-          .img-noticia{
-            img{
+          .img-noticia {
+            img {
               scale: 1.05;
             }
-          } 
+          }
         }
         .texto {
           color: #12244e;
         }
-        .img-noticia{
-           overflow: hidden; 
-           border-radius: 5px;
-           img {
-             width: 100%;
-             height: 100%;
-             transition: .3s;
-           }
+        .infos {
+          color: #2c53af;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+        .img-noticia {
+          overflow: hidden;
+          border-radius: 5px;
+          img {
+            width: 100%;
+            height: 100%;
+            transition: 0.3s;
+          }
         }
       }
     }
