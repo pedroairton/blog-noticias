@@ -75,7 +75,7 @@ export class NewsFormComponent {
       [{ direction: 'rtl' }],
       [{ size: ['small', false, 'large', 'huge'] }],
       [{ color: [] }, { background: [] }],
-      [{ font: [] }],
+      // [{ font: [] }],
       [{ align: [] }],
       ['clean'],
       ['link', 'image', 'video'],
@@ -117,8 +117,8 @@ export class NewsFormComponent {
 
   loadCategories(): void {
     this.newsService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
+      next: (response: any) => {
+        this.categories = response.data;
       },
       error: (error) => {
         this.toastr.error('Erro ao carregar categorias');
@@ -151,7 +151,7 @@ export class NewsFormComponent {
           category_id: news.category_id,
           main_image_caption: news.main_image_caption,
           main_image_alt: news.main_image_alt,
-          is_published: news.is_published,
+          is_published: Boolean(news.is_published),
           tags: news.tags?.map((tag) => tag.id) || [],
         });
 
@@ -170,6 +170,8 @@ export class NewsFormComponent {
     });
   }
 
+  mainImageFile: File | null = null;
+
   onMainImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -184,6 +186,8 @@ export class NewsFormComponent {
         this.toastr.error('A imagem deve ser menor que 2MB');
         return;
       }
+
+      this.mainImageFile = file
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -228,6 +232,7 @@ export class NewsFormComponent {
 
   removeMainImage(): void {
     this.mainImagePreview = null;
+    this.mainImageFile = null;
   }
 
   removeGalleryImage(index: number): void {
@@ -245,6 +250,11 @@ export class NewsFormComponent {
       editor.appendChild(img);
     }
   }
+
+  // private prepareFormData(): FormData {
+  //   const formData = new FormData();
+  // }
+
   onSubmit(): void {
     if (this.newsForm.invalid) {
       this.markFormGroupTouched(this.newsForm);
@@ -253,6 +263,7 @@ export class NewsFormComponent {
     }
 
     this.isLoading = true;
+    
     const formData = new FormData();
 
     Object.keys(this.newsForm.value).forEach((key) => {
@@ -276,7 +287,7 @@ export class NewsFormComponent {
     this.newsService.createNews(formData).subscribe({
       next: (response) => {
         this.toastr.success('Notícia criada com sucesso!');
-        this.router.navigate(['/admin/noticias']);
+        // this.router.navigate(['/admin/noticias']);
       },
       error: (error) => {
         this.toastr.error(error.error?.message) || 'Erro ao criar notícia';

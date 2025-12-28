@@ -1,1 +1,9 @@
-<p>news-list works!</p>
+<section class="admin news-list">
+    <h1>Lista de Notícias</h1>
+    @for (item of news; track $index) {
+        <div class="noticia">
+            <h2>{{ item.title }}</h2>
+            {{ item.content }}
+        </div>
+    }
+</section>

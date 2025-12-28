@@ -1,3 +1,13 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.select-overrides((
+    panel-background-color: #fff,
+  ));
+  --mat-option-selected-state-layer-color: #f0f0f0;
+  --mat-option-hover-state-layer-color: #d0d0d0;
+}
+
 * {
   padding: 0;
   margin: 0;

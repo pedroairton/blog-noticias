@@ -8,148 +8,160 @@
   <mat-spinner diameter="50"></mat-spinner>
   } @else {
   <form [formGroup]="newsForm" (ngSubmit)="onSubmit()">
-    <h2>Informações básicas</h2>
-    <mat-form-field>
-      <mat-label>Título*</mat-label>
-      <input matInput formControlName="title" placeholder="Digite o título" />
-      <mat-icon matSuffix>title</mat-icon>
-      @if (title?.invalid && title?.touched) {
-      <mat-error>
-        @if (title?.errors?.['required']) { O título é obrigatório } @if
-        (title?.errors?.['minlength']) { O título deve ter no mínimo
-        {{ title?.errors?.['minlength']?.requiredLength }} caracteres } @if
-        (title?.errors?.['maxlength']) { O título deve ter no máximo
-        {{ title?.errors?.['maxlength']?.requiredLength }} caracteres }
-      </mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Subtítulo</mat-label>
-      <input
-        matInput
-        formControlName="subtitle"
-        placeholder="Digite o subtítulo (opcional)"
-      />
-      <mat-icon matSuffix>subtitles</mat-icon>
-      <mat-hint>Máximo 500 caracteres</mat-hint>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Categoria *</mat-label>
-      <mat-select formControlName="category_id">
-        @if (categories?.length === 0) {
-        <mat-option value="">Nenhuma categoria disponível</mat-option>
-        } @for (category of categories; track category.id) {
-        <mat-option [value]="category.id">
-          {{ category.name }}
-        </mat-option>
+    <div class="infos-noticia">
+      <h2>Informações básicas</h2>
+      <mat-form-field>
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title" placeholder="Digite o título" />
+        <mat-icon matSuffix>title</mat-icon>
+        @if (title?.invalid && title?.touched) {
+        <mat-error>
+          @if (title?.errors?.['required']) { O título é obrigatório } @if
+          (title?.errors?.['minlength']) { O título deve ter no mínimo
+          {{ title?.errors?.['minlength']?.requiredLength }} caracteres } @if
+          (title?.errors?.['maxlength']) { O título deve ter no máximo
+          {{ title?.errors?.['maxlength']?.requiredLength }} caracteres }
+        </mat-error>
         }
-      </mat-select>
-      <mat-icon matSuffix>category</mat-icon>
-      @if (category_id?.invalid && category_id?.touched) {
-      <mat-error>Categoria é obrigatória</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Tags</mat-label>
-      <mat-select formControlName="tags" multiple>
-        @for (tag of tags; track tag.id) {
-        <mat-option [value]="tag.id">
-          {{ tag.name }}
-        </mat-option>
-        }
-      </mat-select>
-      <mat-icon matSuffix>local_offer</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Resumo da Notícia *</mat-label>
-      <textarea
-        matInput
-        formControlName="excerpt"
-        placeholder="Digite um breve resumo da notícia"
-        rows="3"
-        maxlength="500"
-      ></textarea>
-      <mat-icon matSuffix>description</mat-icon>
-      <mat-hint>{{ excerpt?.value?.length || 0 }}/500 caracteres</mat-hint>
-      @if (excerpt?.invalid && excerpt?.touched) {
-      <mat-error>
-        @if (excerpt?.errors?.['required']) { Resumo é obrigatório } @if
-        (excerpt?.errors?.['maxlength']) { Máximo de 500 caracteres }
-      </mat-error>
-      }
-    </mat-form-field>
-    <h2>Imagem Principal</h2>
-    @if (mainImagePreview) {
-    <img [src]="mainImagePreview" alt="Prévia da imagem principal" />
-    <button
-      mat-icon-button
-      color="warn"
-      (click)="removeMainImage()"
-      type="button"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-    <mat-form-field appearance="outline">
-      <mat-label>Legenda da Imagem</mat-label>
-      <input matInput formControlName="main_image_caption" />
-      <mat-hint>Máximo 255 caracteres</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Texto Alternativo (Alt Text)</mat-label>
-      <input matInput formControlName="main_image_alt" />
-      <mat-hint>Importante para SEO e acessibilidade</mat-hint>
-    </mat-form-field>
-    }
-    <div class="upload">
-      <input
-        #mainImageInput
-        type="file"
-        accept="image/*"
-        (change)="onMainImageSelected($event)"
-      />
-      <mat-icon>cloud_upload</mat-icon>
-      <p>Arraste uma imagem ou clique para selecionar</p>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="mainImageInput.click()"
-      >
-        <mat-icon>upload</mat-icon>
-        Selecionar Imagem Principal
-      </button>
-      <p>Recomendado 1200x630px, máximo 2MB (webp, jpg, png, gif)</p>
-    </div>
-    <div class="galeria">
-      <h2>Galeria de imagens</h2>
-      <div>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Subtítulo</mat-label>
         <input
-          #galleryInput
+          matInput
+          formControlName="subtitle"
+          placeholder="Digite o subtítulo (opcional)"
+        />
+        <mat-icon matSuffix>subtitles</mat-icon>
+        <mat-hint>Máximo 500 caracteres</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category_id">
+          @if (categories?.length === 0) {
+          <mat-option value="">Nenhuma categoria disponível</mat-option>
+          } @for (category of categories; track category.id) {
+          <mat-option [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+          }
+        </mat-select>
+        <mat-icon matSuffix>category</mat-icon>
+        @if (category_id?.invalid && category_id?.touched) {
+        <mat-error>Categoria é obrigatória</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Tags</mat-label>
+        <mat-select formControlName="tags" multiple>
+          @for (tag of tags; track tag.id) {
+          <mat-option [value]="tag.id">
+            {{ tag.name }}
+          </mat-option>
+          }
+        </mat-select>
+        <mat-icon matSuffix>local_offer</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Resumo da Notícia</mat-label>
+        <textarea
+          matInput
+          formControlName="excerpt"
+          placeholder="Digite um breve resumo da notícia"
+          rows="3"
+          maxlength="500"
+        ></textarea>
+        <mat-icon matSuffix>description</mat-icon>
+        <mat-hint>{{ excerpt?.value?.length || 0 }}/500 caracteres</mat-hint>
+        @if (excerpt?.invalid && excerpt?.touched) {
+        <mat-error>
+          @if (excerpt?.errors?.['required']) { Resumo é obrigatório } @if
+          (excerpt?.errors?.['maxlength']) { Máximo de 500 caracteres }
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="img-noticia">
+      <h2>Imagem Principal</h2>
+      @if (mainImagePreview) {
+      <div class="preview-imagem">
+        <div class="container-imagem">
+          <img [src]="mainImagePreview" alt="Prévia da imagem principal" />
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="removeMainImage()"
+            type="button"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <mat-form-field>
+          <mat-label>Legenda da Imagem</mat-label>
+          <input matInput formControlName="main_image_caption" />
+          <mat-hint>Máximo 255 caracteres</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Texto Alternativo (Alt Text)</mat-label>
+          <input matInput formControlName="main_image_alt" />
+          <mat-hint>Importante para SEO e acessibilidade</mat-hint>
+        </mat-form-field>
+      </div>
+      }
+      <div class="upload">
+        <input
+          #mainImageInput
           type="file"
           accept="image/*"
-          multiple
-          (change)="onGallerySelected($event)"
+          (change)="onMainImageSelected($event)"
         />
+        <mat-icon>cloud_upload</mat-icon>
+        <p>Arraste uma imagem ou clique para selecionar</p>
         <button
           mat-raised-button
-          color="accent"
+          color="primary"
           type="button"
-          (click)="galleryInput.click()"
+          (click)="mainImageInput.click()"
         >
-          <mat-icon>add_photo_alternate</mat-icon>
-          Adicionar imagens à galeria
+          <mat-icon>upload</mat-icon>
+          Selecionar Imagem Principal
         </button>
-        <p>Você pode selecioanr múltiplas imagens (máximo 2MB cada)</p>
+        <p>Recomendado 1200x630px, máximo 2MB (webp, jpg, png, gif)</p>
       </div>
+    </div>
+
+    <div class="galeria">
+      <h2>Galeria de imagens</h2>
+      <input
+        #galleryInput
+        type="file"
+        accept="image/*"
+        multiple
+        (change)="onGallerySelected($event)"
+      />
+      <button
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="galleryInput.click()"
+      >
+        <mat-icon>add_photo_alternate</mat-icon>
+        Adicionar imagens à galeria
+      </button>
+      <p>Você pode selecionar múltiplas imagens (máximo 2MB cada)</p>
 
       @if (galleryPreviews.length) {
-      <div>
-        <h3>Imagens selecionadas {{ galleryPreviews.length }}</h3>
+      <h3>Imagens selecionadas: {{ galleryPreviews.length }}</h3>
+      <div class="imgs-galeria">
         @for (preview of galleryPreviews; track $index; let i = $index) {
-        <div>
-          <img [src]="preview" [alt]="'Imagem ' + (i + 1)" />
-          <div>
+        <div class="container-img-galeria">
+          <img
+            class="img-galeria"
+            [src]="preview"
+            [alt]="'Imagem ' + (i + 1)"
+          />
+          <div class="acoes">
             <button
               mat-icon-button
               color="warn"
@@ -172,7 +184,8 @@
       </div>
       }
     </div>
-    <div class="conteudo">
+
+    <div class="conteudo-noticia">
       <h2>Conteúdo da Notícia</h2>
       <div>
         <quill-editor
@@ -193,30 +206,32 @@
         </p>
       </div>
     </div>
+    <hr>
     <div class="acoes">
       <button
         mat-button
         type="button"
         routerLink="/admin/noticias"
         [disabled]="isLoading"
+        class="btn-cancelar"
       >
         Cancelar
       </button>
       <button
         mat-button
         type="button"
-        color="primary"
         (click)="saveDraft()"
         [disabled]="isLoading || newsForm.invalid"
+        class="btn-salvar-rascunho"
       >
         <mat-icon>save</mat-icon>
         Salvar Rascunho
       </button>
       <button
         mat-raised-button
-        color="primary"
         type="submit"
         [disabled]="isLoading || newsForm.invalid"
+        class="btn-salvar"
       >
         <mat-icon>{{ isEditMode ? "update" : "add" }}</mat-icon>
         {{ isEditMode ? "Atualizar" : "Criar" }}
@@ -269,7 +284,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Título -->
           <div class="md:col-span-2">
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field class="w-full">
               <mat-label>Título da Notícia *</mat-label>
               <input
                 matInput
@@ -288,7 +303,7 @@
 
           <!-- Subtítulo -->
           <div class="md:col-span-2">
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field class="w-full">
               <mat-label>Subtítulo</mat-label>
               <input
                 matInput
@@ -302,7 +317,7 @@
 
           <!-- Categoria -->
           <div>
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field class="w-full">
               <mat-label>Categoria *</mat-label>
               <mat-select formControlName="category_id">
                 @for (category of categories; track category.id) {
@@ -320,7 +335,7 @@
 
           <!-- Tags -->
           <div>
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field class="w-full">
               <mat-label>Tags</mat-label>
               <mat-select formControlName="tags" multiple>
                 @for (tag of tags; track tag.id) {
@@ -336,7 +351,7 @@
 
         <!-- Resumo -->
         <div class="mt-6">
-          <mat-form-field appearance="outline" class="w-full">
+          <mat-form-field class="w-full">
             <mat-label>Resumo da Notícia *</mat-label>
             <textarea
               matInput
@@ -388,13 +403,13 @@
 
           <!-- Metadados da Imagem -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field class="w-full">
               <mat-label>Legenda da Imagem</mat-label>
               <input matInput formControlName="main_image_caption" />
               <mat-hint>Máximo 255 caracteres</mat-hint>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field class="w-full">
               <mat-label>Texto Alternativo (Alt Text)</mat-label>
               <input matInput formControlName="main_image_alt" />
               <mat-hint>Importante para SEO e acessibilidade</mat-hint>

@@ -13,48 +13,48 @@ export class NewsService {
 
   // public
   getNews(params?: any): Observable<{data: News[], meta: any}> {
-    return this.api.get('/news', params)
+    return this.api.get('news', params)
   }
 
   getNewsBySlug(slug: string): Observable<News> {
-    return this.api.get(`/news/${slug}`)
+    return this.api.get(`news/${slug}`)
   }
 
   getFeaturedNews(): Observable<News[]> {
-    return this.api.get('/news/featured')
+    return this.api.get('news/featured')
   }
 
   getNewsByCategory(slug: string, params?: any): Observable<any> {
-    return this.api.get(`/news/category/${slug}`, params)
+    return this.api.get(`news/category/${slug}`, params)
   }
 
   getNewsByAuthor(slug: string, params?: any): Observable<any> {
-    return this.api.get(`/news/author/${slug}`, params)
+    return this.api.get(`news/author/${slug}`, params)
   }
 
   incrementViews(id: string): Observable<any> {
-    return this.api.post(`/news/${id}/increment-views`)
+    return this.api.post(`news/${id}/increment-views`)
   }
 
   // admin
   getAdminNews(params?: any): Observable<{data: News[], meta: any}> {
-    return this.api.get('/admin/news', params)
+    return this.api.get('admin/news', params)
   }
 
   getNewsById(id: number): Observable<News> {
-    return this.api.get(`/admin/news/${id}`)
+    return this.api.get(`admin/news/${id}`)
   }
 
   createNews(formData: FormData): Observable<News> {
-    return this.api.post('/admin/news', formData)
+    return this.api.post('admin/news', formData)
   }
 
   updateNews(id: number, formData: FormData): Observable<News> {
-    return this.api.put(`/admin/news/${id}`, formData)
+    return this.api.put(`admin/news/${id}`, formData)
   }
 
   deleteNews(id: number): Observable<any> {
-    return this.api.delete(`/admin/news/${id}`)
+    return this.api.delete(`admin/news/${id}`)
   }
 
   publishNews(id: number): Observable<any> {
