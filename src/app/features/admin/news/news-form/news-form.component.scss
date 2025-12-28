@@ -1,0 +1,53 @@
+:host {
+  display: block;
+}
+
+// Ajustes para o editor Quill
+::ng-deep {
+  .ql-toolbar {
+    border-color: #e5e7eb !important;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  
+  .ql-container {
+    border-color: #e5e7eb !important;
+    border-radius: 0 0 0.5rem 0.5rem;
+    font-family: inherit;
+  }
+  
+  .ql-editor {
+    min-height: 400px;
+    font-size: 16px;
+    line-height: 1.6;
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 1rem 0;
+    }
+  }
+}
+
+// Animações
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  ::ng-deep {
+    .ql-toolbar .ql-formats {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

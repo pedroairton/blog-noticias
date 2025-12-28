@@ -1,0 +1,55 @@
+.sidebar{
+    background-color: #12244E;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    min-height: 100dvh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 15px;
+    .infos{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: solid 1px white;
+        img{
+            border-radius: 10px;
+        }
+        h2{
+            font-size: 1.25rem;
+        }
+        p{
+            font-size: 0.875rem;
+        }
+    }
+    nav{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 0;
+        a{
+            padding: 0.5rem 0;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            position: relative;
+            &::after{
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 1px;
+                background-color: white;
+                transition: .3s;
+            }
+            &:hover{
+                &::after{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

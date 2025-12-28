@@ -32,6 +32,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/public/auth/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
+  },
+  {
     path: 'admin',
     loadComponent: () =>
       import(

@@ -1,5 +1,9 @@
 <main>
-    <app-header></app-header>
+    @if (!hidePublic) {
+        <app-header></app-header>
+    }
     <router-outlet></router-outlet>
-    <app-footer></app-footer>
+    @if (!hidePublic) {
+        <app-footer></app-footer>
+    }
 </main>
