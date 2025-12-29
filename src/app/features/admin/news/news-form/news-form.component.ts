@@ -187,7 +187,7 @@ export class NewsFormComponent {
         return;
       }
 
-      this.mainImageFile = file
+      this.mainImageFile = file;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -251,9 +251,31 @@ export class NewsFormComponent {
     }
   }
 
-  // private prepareFormData(): FormData {
-  //   const formData = new FormData();
-  // }
+  private prepareFormData(): FormData {
+    const formData = new FormData();
+    const formValue = this.newsForm.value
+
+    Object.keys(formValue).forEach(key => {
+      if(key !== 'tags' && key !== 'main_image') {
+        const value = formValue[key]
+        if(typeof value === 'boolean') {
+          formData.append(key, value.toString())
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, value.toString())
+        }
+      }
+    })
+
+    if(this.mainImageFile) {
+      formData.append('main_image', this.mainImageFile)
+    }
+
+    const tags = this.newsForm.value.tags || [];
+    tags.forEach((tagId: number) => {
+      formData.append('tags[]', tagId.toString());
+    });
+    return formData;
+  }
 
   onSubmit(): void {
     if (this.newsForm.invalid) {
@@ -264,17 +286,12 @@ export class NewsFormComponent {
 
     this.isLoading = true;
     
-    const formData = new FormData();
+    const formData = this.prepareFormData();
 
     Object.keys(this.newsForm.value).forEach((key) => {
       if (key !== 'tags') {
         formData.append(key, this.newsForm.value[key]);
       }
-    });
-
-    const tags = this.newsForm.value.tags || [];
-    tags.forEach((tagId: number) => {
-      formData.append('tags[]', tagId.toString());
     });
 
     if (this.isEditMode && this.newsId) {
