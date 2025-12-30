@@ -49,3 +49,28 @@ export interface NewsFormData {
   tags?: number[];
   is_published?: boolean;
 }
+
+export interface GalleryImage {
+  id: number;
+  news_id: number;
+  image_path: string;
+  thumbnail_path?: string;
+  caption?: string;
+  alt_text?: string;
+  position: number;
+  original_name: string;
+  mime_type: string;
+  file_size: number;
+  dimensions?: {
+    width: number;
+    height: number;
+  };
+  image_url?: string;
+  thumbnail_url?: string;
+}
+
+export interface GalleryUploadData {
+  file: File;
+  caption?: string;
+  alt_text?: string;
+}
