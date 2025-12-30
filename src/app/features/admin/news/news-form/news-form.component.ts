@@ -22,6 +22,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { QuillModule } from 'ngx-quill';
 import 'quill/dist/quill.snow.css';
 import { CommonModule } from '@angular/common';
+import { GalleryImage, GalleryUploadData } from '../../../../core/models/news.model';
+import { MatDialog } from '@angular/material/dialog';
+import { GalleryImageDialogComponent } from '../../dialog/gallery-image-dialog/gallery-image-dialog.component';
+
 @Component({
   selector: 'app-news-form',
   imports: [
@@ -37,7 +41,8 @@ import { CommonModule } from '@angular/common';
     MatCheckboxModule,
     MatSnackBarModule,
     QuillModule,
-],
+    GalleryImageDialogComponent,
+  ],
   templateUrl: './news-form.component.html',
   styleUrl: './news-form.component.scss',
 })
@@ -51,6 +56,8 @@ export class NewsFormComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private toastr = inject(ToastrService);
+  private dialog = inject(MatDialog)
+
 
   newsForm: FormGroup;
   categories: Category[] = [];
@@ -59,10 +66,15 @@ export class NewsFormComponent {
   isLoading = false;
   isEditMode = false;
   newsId?: number;
+
+  mainImageFile: File | null = null
   mainImagePreview: string | null = null;
-  galleryImages: File[] = [];
-  galleryPreviews: string[] = [];
-  selectedCategory?: Category;
+
+
+  galleryImages: GalleryUploadData[] = [];
+  existingGalleryImages: GalleryImage[] = []
+  galleryPreviews: { preview: string; caption: string; alt_text: string }[] = [];
+  // selectedCategory?: Category;
 
   quillConfig = {
     toolbar: [
@@ -112,6 +124,7 @@ export class NewsFormComponent {
       this.isEditMode = true;
       this.newsId = +id;
       this.loadNewsData(this.newsId);
+      this.loadGalleryImages(this.newsId);
     }
   }
 
@@ -159,7 +172,7 @@ export class NewsFormComponent {
           this.mainImagePreview = news.main_image;
         }
 
-        this.selectedTags = news.tags?.map((tag) => tag.id) || [];
+        // this.selectedTags = news.tags?.map((tag) => tag.id) || [];
         this.isLoading = false;
       },
       error: (error) => {
@@ -170,7 +183,17 @@ export class NewsFormComponent {
     });
   }
 
-  mainImageFile: File | null = null;
+  loadGalleryImages(newsId: number) {
+    this.newsService.getGallery(newsId).subscribe({
+      next: (images) => {
+        this.existingGalleryImages = images;
+      },
+      error: (error) => {
+        this.toastr.error('Erro ao carregar imagens da galeria');
+        console.error(error);
+      },
+    });
+  }
 
   onMainImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -217,11 +240,19 @@ export class NewsFormComponent {
           continue;
         }
 
-        this.galleryImages.push(file);
+        this.galleryImages.push({
+          file: file,
+          caption: '',
+          alt_text: ''
+        });
 
         const reader = new FileReader();
         reader.onload = () => {
-          this.galleryPreviews.push(reader.result as string);
+          this.galleryPreviews.push({
+            preview: reader.result as string,
+            caption: '',
+            alt_text: ''
+          });
         };
         reader.readAsDataURL(file);
       }
@@ -240,14 +271,83 @@ export class NewsFormComponent {
     this.galleryPreviews.splice(index, 1);
   }
 
-  insertImageInContent(imageUrl: string): void {
+  removeExistingGalleryImage(imageId: number): void {
+    if(!this.newsId) return
+
+    this.newsService.deleteGalleryImage(this.newsId, imageId).subscribe({
+      next: () => {
+        this.existingGalleryImages = this.existingGalleryImages.filter(
+          img => img.id !== imageId
+        )
+        this.toastr.success("Imagem removida da galeria")
+      }, error: (error) => {
+        this.toastr.error("Erro ao remover imagem")
+        console.error(error)
+      }
+    })
+  }
+
+  openImageDialog(index: number, isNew: boolean = true): void {
+    const dialogRef = this.dialog.open(GalleryImageDialogComponent, {
+      width: '500px',
+      data: {
+        caption: isNew ? this.galleryPreviews[index]?.caption : this.existingGalleryImages[index]?.caption,
+        alt_text: isNew ? this.galleryPreviews[index]?.alt_text : this.existingGalleryImages[index]?.alt_text
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (isNew) {
+          // Atualizar nova imagem
+          this.galleryPreviews[index] = {
+            ...this.galleryPreviews[index],
+            caption: result.caption,
+            alt_text: result.alt_text
+          };
+          this.galleryImages[index] = {
+            ...this.galleryImages[index],
+            caption: result.caption,
+            alt_text: result.alt_text
+          };
+        } else if (this.newsId) {
+          // Atualizar imagem existente
+          const imageId = this.existingGalleryImages[index].id;
+          this.newsService.updateGalleryImage(this.newsId, imageId, {
+            caption: result.caption,
+            alt_text: result.alt_text
+          }).subscribe({
+            next: () => {
+              this.existingGalleryImages[index] = {
+                ...this.existingGalleryImages[index],
+                caption: result.caption,
+                alt_text: result.alt_text
+              };
+              this.toastr.success('Imagem atualizada');
+            },
+            error: (error) => {
+              this.toastr.error('Erro ao atualizar imagem');
+              console.error(error);
+            }
+          });
+        }
+      }
+    });
+  }
+
+  insertImageInContent(imageUrl: string, altText: string = ''): void {
     // quill
     const editor = document.querySelector('.ql-editor') as HTMLElement;
     if (editor) {
       const img = document.createElement('img');
       img.src = imageUrl;
-      (img.alt = 'Imagem do conteúdo'), (img.className = 'content-image');
-      editor.appendChild(img);
+      img.alt = altText || 'Imagem do conteúdo'
+      img.className = 'content-image'
+      editor.appendChild(img)
+
+      this.newsForm.patchValue({
+        content: editor.innerHTML
+      })
     }
   }
 
@@ -256,13 +356,18 @@ export class NewsFormComponent {
     const formValue = this.newsForm.value
 
     Object.keys(formValue).forEach(key => {
-      if(key !== 'tags' && key !== 'main_image') {
+      if(key !== 'tags') {
         const value = formValue[key]
         if(typeof value === 'boolean') {
           formData.append(key, value.toString())
         } else if (value !== null && value !== undefined) {
           formData.append(key, value.toString())
         }
+        // if(value !== null && value !== undefined) {
+        //   formData.append(key, value ? '1' : '0')
+        // } else {
+        //   formData.append(key, value.toString())
+        // }
       }
     })
 
@@ -288,11 +393,11 @@ export class NewsFormComponent {
     
     const formData = this.prepareFormData();
 
-    Object.keys(this.newsForm.value).forEach((key) => {
-      if (key !== 'tags') {
-        formData.append(key, this.newsForm.value[key]);
-      }
-    });
+    // Object.keys(this.newsForm.value).forEach((key) => {
+    //   if (key !== 'tags') {
+    //     formData.append(key, this.newsForm.value[key]);
+    //   }
+    // });
 
     if (this.isEditMode && this.newsId) {
       this.updateNews(formData);
@@ -325,6 +430,27 @@ export class NewsFormComponent {
         this.isLoading = false;
       },
     });
+  }
+
+  private uploadGalleryImages(newsId: number): void {
+    if(this.galleryImages.length === 0) {
+      this.isLoading = false
+      this.router.navigate(['/admin/noticias'])
+      return
+    }
+
+    this.newsService.uploadGalleryImages(newsId, this.galleryImages).subscribe({
+      next: (response) => {
+        this.toastr.success('Imagens da galeria enviadas com sucesso!')
+        this.isLoading = false
+        this.router.navigate(['/admin/noticias'])
+      }, error: (error) =>{
+        console.error('Erro ao enviar imagens da galeria:', error);
+        this.isLoading = false
+        this.toastr.warning('Notícia salva, mas algumas imagens da galeria não foram enviadas')
+        this.router.navigate(['/admin/noticias'])
+      }
+    })
   }
 
   saveDraft(): void {

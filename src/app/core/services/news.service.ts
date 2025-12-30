@@ -86,22 +86,31 @@ export class NewsService {
   }
 
   uploadGalleryImages(newsId: number, images: GalleryUploadData[]): Observable<any> {
-    const formData = new FormData()
-
+    const formData = new FormData();
+    
     images.forEach((item, index) => {
-      formData.append(`images[${index}]`, item.file)
-      if(item.caption) {
-        formData.append(`captions[${index}]`, item.caption)
+      formData.append(`images[${index}]`, item.file);
+      if (item.caption) {
+        formData.append(`captions[${index}]`, item.caption);
       }
-      if(item.alt_text) {
-        formData.append(`alt_texts[${index}]`, item.alt_text)
+      if (item.alt_text) {
+        formData.append(`alt_texts[${index}]`, item.alt_text);
       }
-    })
-
-    return this.api.upload(`admin/news/${newsId}/gallery`, formData)
+    });
+    
+    return this.api.upload(`admin/news/${newsId}/gallery`, formData);
   }
 
-  uploadSingleGalleryImage(newsId: number, imageId: number, data: Partial<GalleryImage>): Observable<any> {
+  uploadSingleGalleryImage(newsId: number, file: File, caption?: string, altText?: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', file);
+    if (caption) formData.append('caption', caption);
+    if (altText) formData.append('alt_text', altText);
+    
+    return this.api.upload(`admin/news/${newsId}/gallery/single`, formData);
+  }
+
+  updateGalleryImage(newsId: number, imageId: number, data: Partial<GalleryImage>): Observable<GalleryImage> {
     return this.api.put(`admin/news/${newsId}/gallery/${imageId}`, data)
   }
 
