@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { News } from '../models/news.model';
+import { GalleryImage, GalleryUploadData, News } from '../models/news.model';
 import { Category } from '../models/category.model';
 import { Tag } from '../models/tag.model';
 
@@ -65,13 +65,13 @@ export class NewsService {
     return this.api.patch(`admin/news/${id}/unpublish`, {})
   }
 
-  uploadGalleryImages(newsId: number, images: File[]): Observable<any> {
-    const formData = new FormData()
-    images.forEach(image => {
-      formData.append('images[]', image)
-    })
-    return this.api.post(`admin/news/${newsId}/gallery`, formData)
-  }
+  // uploadGalleryImages(newsId: number, images: File[]): Observable<any> {
+  //   const formData = new FormData()
+  //   images.forEach(image => {
+  //     formData.append('images[]', image)
+  //   })
+  //   return this.api.post(`admin/news/${newsId}/gallery`, formData)
+  // }
 
   getCategories(): Observable<Category[]> {
     return this.api.get('admin/categories')
@@ -79,5 +79,37 @@ export class NewsService {
 
   getTags(): Observable<Tag[]> {
     return this.api.get('admin/tags')
+  }
+
+  getGallery(newsId: number): Observable<GalleryImage[]> {
+    return this.api.get<GalleryImage[]>(`admin/news/${newsId}/gallery`)
+  }
+
+  uploadGalleryImages(newsId: number, images: GalleryUploadData[]): Observable<any> {
+    const formData = new FormData()
+
+    images.forEach((item, index) => {
+      formData.append(`images[${index}]`, item.file)
+      if(item.caption) {
+        formData.append(`captions[${index}]`, item.caption)
+      }
+      if(item.alt_text) {
+        formData.append(`alt_texts[${index}]`, item.alt_text)
+      }
+    })
+
+    return this.api.upload(`admin/news/${newsId}/gallery`, formData)
+  }
+
+  uploadSingleGalleryImage(newsId: number, imageId: number, data: Partial<GalleryImage>): Observable<any> {
+    return this.api.put(`admin/news/${newsId}/gallery/${imageId}`, data)
+  }
+
+  deleteGalleryImage(newsId: number, imageId: number): Observable<any> {
+    return this.api.delete(`admin/news/${newsId}/gallery/${imageId}`)
+  }
+
+  reorderGallery(newsId: number, images: {id: number, position: number}[]): Observable<any> {
+    return this.api.put(`admin/news/${newsId}/gallery/reorder`, {images})
   }
 }
