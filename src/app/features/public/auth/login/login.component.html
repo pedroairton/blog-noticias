@@ -1,1 +1,17 @@
-<p>login works!</p>
+<section class="login-container">
+    <div class="logo">
+        <h1>Logo</h1>
+        <p>Painel de administrador</p>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field>
+            <mat-label>Login (Email)</mat-label>
+            <input type="text" matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="password" matInput formControlName="password">
+        </mat-form-field>
+        <button type="submit" mat-button [disabled]="loginForm.invalid">Fazer Login</button>
+    </form>
+</section>

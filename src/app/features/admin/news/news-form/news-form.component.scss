@@ -67,6 +67,10 @@
     flex-direction: column;
     gap: 2rem;
     padding: 2rem;
+    .overlay-img{
+      height: fit-content;
+      margin-top: auto;
+    }
     input,textarea{
       &::placeholder{
         color: #505050;
