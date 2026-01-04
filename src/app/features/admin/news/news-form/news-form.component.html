@@ -121,7 +121,7 @@
       <div class="imgs-galeria">
         @for (preview of galleryPreviews; track $index; let i = $index) {
         <div class="container-img-galeria">
-          <img class="img-galeria" [src]="preview" [alt]="'Imagem ' + (i + 1)" />
+          <img class="img-galeria" [src]="preview.preview" [alt]="'Imagem ' + (i + 1)" />
           <div class="acoes">
             <button mat-icon-button color="warn" type="button" (click)="removeGalleryImage(i)">
               <mat-icon>delete</mat-icon>
@@ -170,7 +170,7 @@
       </button>
 
       @if (authService.isSuperAdmin()) {
-      <button mat-raised-button color="accent" type="button" (click)="publish()"
+      <button class="btn-publish" mat-raised-button color="accent" type="button" (click)="publish()"
         [disabled]="isLoading || newsForm.invalid">
         <mat-icon>publish</mat-icon>
         Publicar agora
@@ -504,7 +504,7 @@
 
         @if (authService.isSuperAdmin()) {
         <button mat-raised-button color="accent" type="button" (click)="publish()"
-          [disabled]="isLoading || newsForm.invalid">
+          [disabled]="isLoading || newsForm.invalid" class="btn-publish">
           <mat-icon>publish</mat-icon>
           Publicar Agora
         </button>

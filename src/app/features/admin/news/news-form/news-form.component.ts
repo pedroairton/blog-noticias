@@ -344,10 +344,6 @@ export class NewsFormComponent {
       img.alt = altText || 'Imagem do conteúdo'
       img.className = 'content-image'
       editor.appendChild(img)
-
-      this.newsForm.patchValue({
-        content: editor.innerHTML
-      })
     }
   }
 
