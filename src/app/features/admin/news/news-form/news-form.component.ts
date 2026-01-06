@@ -142,8 +142,8 @@ export class NewsFormComponent {
 
   loadTags(): void {
     this.newsService.getTags().subscribe({
-      next: (tags) => {
-        this.tags = tags;
+      next: (response: any) => {
+        this.tags = response.data;
       },
       error: (error) => {
         this.toastr.error('Erro ao carregar tags');
@@ -345,9 +345,9 @@ export class NewsFormComponent {
       img.className = 'content-image'
       editor.appendChild(img)
 
-      this.newsForm.patchValue({
-        content: editor.innerHTML
-      })
+      // this.newsForm.patchValue({
+      //   content: editor.innerHTML
+      // })
     }
   }
 
