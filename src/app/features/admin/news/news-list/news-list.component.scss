@@ -2,7 +2,19 @@
   width: 90%;
   margin: 0 auto;
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .noticias{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+    .noticia{
+      width: 300px;
+      img{
+        width: 100%;
+      }
+      h2{
+        font-weight: 600;
+      }
+    }
+  }
 }

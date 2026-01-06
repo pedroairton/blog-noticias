@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.api.post<LoginResponse>('/auth/login', credentials).pipe(
+    return this.api.post<LoginResponse>('auth/login', credentials).pipe(
       tap((response: LoginResponse) => {
         this.setSession(response)
         this.router.navigate(['/admin/dashboard'])
@@ -34,13 +34,13 @@ export class AuthService {
   }
 
   logout(): void {
-    this.api.post('/auth/logout', {}).subscribe()
+    this.api.post('auth/logout', {}).subscribe()
     this.clearSession()
     this.router.navigate(['/login'])
   }
 
   getCurrentUser(): Observable<Admin | null> {
-    return this.api.get<Admin>('/auth/me')
+    return this.api.get<Admin>('auth/me')
   }
 
   refreshToken(): Observable<any> {

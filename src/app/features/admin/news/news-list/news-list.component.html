@@ -1,9 +1,21 @@
 <section class="admin news-list">
     <h1>Lista de Notícias</h1>
-    @for (item of news; track $index) {
-        <div class="noticia">
-            <h2>{{ item.title }}</h2>
-            {{ item.content }}
+    <div class="spinner">
+
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    @if (isLoading) {
+        <mat-spinner diameter="50"></mat-spinner>
+    }
+    @else {
+        <div class="noticias">
+        @for (item of news; track $index) {
+            <div class="noticia">
+                <img [src]="`${storageUrl}/${item.main_image}`" alt="">
+                <h2>{{ item.title }}</h2>
+                <div [innerHTML]="sanitizeHtml(item.excerpt)"></div>
+            </div>
+        }
         </div>
     }
 </section>
