@@ -100,7 +100,7 @@ export class NewsFormComponent {
 
   ngOnInit(): void {
     this.loadCategories();
-    // this.loadTags();
+    this.loadTags();
     this.checkEditMode();
   }
 
