@@ -49,7 +49,7 @@ export class NewsService {
     return this.api.post('admin/news', formData)
   }
 
-  updateNews(id: number, formData: FormData): Observable<News> {
+  updateNews(id: number, formData: any): Observable<News> {
     return this.api.put(`admin/news/${id}`, formData)
   }
 
@@ -85,19 +85,7 @@ export class NewsService {
     return this.api.get<GalleryImage[]>(`admin/news/${newsId}/gallery`)
   }
 
-  uploadGalleryImages(newsId: number, images: GalleryUploadData[]): Observable<any> {
-    const formData = new FormData();
-    
-    images.forEach((item, index) => {
-      formData.append(`images[${index}]`, item.file);
-      if (item.caption) {
-        formData.append(`captions[${index}]`, item.caption);
-      }
-      if (item.alt_text) {
-        formData.append(`alt_texts[${index}]`, item.alt_text);
-      }
-    });
-    
+  uploadGalleryImages(newsId: number, formData: FormData): Observable<any> {
     return this.api.upload(`admin/news/${newsId}/gallery`, formData);
   }
 
