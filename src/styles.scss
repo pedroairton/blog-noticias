@@ -11,7 +11,8 @@
 * {
   padding: 0;
   margin: 0;
-  opacity: 0.965;
+  // opacity: 0.965;
+  box-sizing: border-box;
 }
 
 body {
@@ -37,4 +38,7 @@ section {
 }
 section.admin{
   width: 100%;
+}
+mat-spinner{
+  stroke: #2c53af;
 }

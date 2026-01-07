@@ -1,9 +1,5 @@
 <section class="admin news-list">
     <h1>Lista de Notícias</h1>
-    <div class="spinner">
-
-        <mat-spinner diameter="50"></mat-spinner>
-    </div>
     @if (isLoading) {
         <mat-spinner diameter="50"></mat-spinner>
     }
@@ -11,9 +7,20 @@
         <div class="noticias">
         @for (item of news; track $index) {
             <div class="noticia">
-                <img [src]="`${storageUrl}/${item.main_image}`" alt="">
-                <h2>{{ item.title }}</h2>
-                <div [innerHTML]="sanitizeHtml(item.excerpt)"></div>
+                <div class="img-noticia">
+                    <img [src]="`${storageUrl}/${item.main_image}`" alt="">
+                </div>
+                <div class="infos-noticia">
+                    <span class="categoria">{{ item.category?.name }}</span>
+                    <h2>{{ item.title }}</h2>
+                    <div class="excerpt" [innerHTML]="sanitizeHtml(item.excerpt)"></div>
+                </div>
+                <div class="buttons">
+                    <a href="admin/noticias/editar/{{ item.id }}">
+                        <button class="btn-edit" mat-button color="primary">Editar</button>
+                    </a>
+                    <button (click)="deleteNews(item.id)" class="btn-delete" mat-button color="warn">Excluir</button>
+                </div>
             </div>
         }
         </div>

@@ -40,4 +40,18 @@ export class NewsListComponent {
       },
     });
   }
+  deleteNews(id: number) {
+    if (confirm('Deseja realmente excluir esta notícia?')) {
+      this.newsService.deleteNews(id).subscribe({
+        next: () => {
+          this.getNews();
+          this.toastr.success('Notícia excluída com sucesso');
+        },
+        error: (error) => {
+          this.toastr.error('Erro ao excluir notícia');
+          console.error(error);
+        },
+      });
+    }
+  }
 }

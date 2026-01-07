@@ -1,1 +1,11 @@
-<p>tags works!</p>
+<section class="admin tags">
+  <h1>Tags</h1>
+  <div class="lista-tags">
+
+    @for (tag of tags; track $index) {
+    <div class="tag">
+      <h2>{{ tag.name }}</h2>
+    </div>
+    }
+  </div>
+</section>
