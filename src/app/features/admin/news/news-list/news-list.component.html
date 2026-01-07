@@ -1,28 +1,41 @@
 <section class="admin news-list">
-    <h1>Lista de Notícias</h1>
+    <div class="topo">
+        <h1>Lista de Notícias</h1>
+        <a href="">
+            <button mat-button class="btn-add">
+                <mat-icon>add</mat-icon>
+                Adicionar Notícia
+            </button> </a>
+    </div>
     @if (isLoading) {
-        <mat-spinner diameter="50"></mat-spinner>
+    <mat-spinner diameter="50"></mat-spinner>
     }
     @else {
-        <div class="noticias">
+    <div class="noticias">
         @for (item of news; track $index) {
-            <div class="noticia">
-                <div class="img-noticia">
-                    <img [src]="`${storageUrl}/${item.main_image}`" alt="">
-                </div>
-                <div class="infos-noticia">
-                    <span class="categoria">{{ item.category?.name }}</span>
-                    <h2>{{ item.title }}</h2>
-                    <div class="excerpt" [innerHTML]="sanitizeHtml(item.excerpt)"></div>
-                </div>
-                <div class="buttons">
-                    <a href="admin/noticias/editar/{{ item.id }}">
-                        <button class="btn-edit" mat-button color="primary">Editar</button>
-                    </a>
-                    <button (click)="deleteNews(item.id)" class="btn-delete" mat-button color="warn">Excluir</button>
-                </div>
+        <div class="noticia">
+            <div class="img-noticia">
+                <img [src]="`${storageUrl}/${item.main_image}`" alt="">
             </div>
-        }
+            <div class="infos-noticia">
+                <span class="categoria">{{ item.category?.name }}</span>
+                <h2>{{ item.title }}</h2>
+                <div class="excerpt" [innerHTML]="sanitizeHtml(item.excerpt)"></div>
+            </div>
+            <div class="buttons">
+                <a href="admin/noticias/editar/{{ item.id }}">
+                    <button class="btn-edit" mat-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                        Editar
+                    </button>
+                </a>
+                <button (click)="deleteNews(item.id)" class="btn-delete" mat-button color="warn">
+                    <mat-icon>delete</mat-icon>
+                    Excluir
+                </button>
+            </div>
         </div>
+        }
+    </div>
     }
 </section>

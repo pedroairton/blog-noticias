@@ -1,5 +1,11 @@
 <section class="admin tags">
-  <h1>Tags</h1>
+  <div class="topo">
+    <h1>Tags</h1>
+    <button mat-button class="btn-add">
+      <mat-icon>add</mat-icon>
+      Adicionar Tag
+    </button>
+  </div>
   <div class="lista-tags">
 
     @for (tag of tags; track $index) {

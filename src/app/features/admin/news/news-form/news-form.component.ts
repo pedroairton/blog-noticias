@@ -24,13 +24,16 @@ import 'quill/dist/quill.snow.css';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { GalleryImageDialogComponent } from '../../dialog/gallery-image-dialog/gallery-image-dialog.component';
+import { environment } from '../../../../../environments/environment';
 
 interface GalleryImage {
-  file: File;
+  id?: number;
+  file: File | null;
   caption: string;
   alt_text: string;
   preview: string;
   placeholder: string;
+  originalImage?: any
 }
 
 @Component({
@@ -74,6 +77,7 @@ export class NewsFormComponent {
   mainImagePreview: string | null = null;
   galleryImages: GalleryImage[] = [];
   galleryPreviews: string[] = [];
+  existingGalleryImages: GalleryImage[] = [];
   selectedCategory?: Category;
 
   mainImageFile: File | null = null;
@@ -157,11 +161,12 @@ export class NewsFormComponent {
     this.isLoading = true;
     this.newsService.getNewsById(id).subscribe({
       next: (news) => {
+        const storageUrl = environment.storageUrl;
         this.newsForm.patchValue({
           title: news.title,
           subtitle: news.subtitle,
           excerpt: news.excerpt,
-          content: news.content,
+          content: news.content_with_full_urls || news.content,
           category_id: news.category_id,
           main_image_caption: news.main_image_caption,
           main_image_alt: news.main_image_alt,
@@ -169,8 +174,17 @@ export class NewsFormComponent {
           tags: news.tags?.map((tag) => tag.id) || [],
         });
 
-        if (news.main_image) {
-          this.mainImagePreview = news.main_image;
+        if (news.main_image_url) {
+          console.log(news.main_image_url);
+          console.log(news);
+          
+          this.mainImagePreview = news.main_image_url;
+        } else if (news.main_image){
+          this.mainImagePreview = storageUrl +'/'+ news.main_image;
+        }
+
+        if(this.isEditMode){
+          this.loadGalleryImages(id)
         }
 
         this.selectedTags = news.tags?.map((tag) => tag.id) || [];
@@ -182,6 +196,31 @@ export class NewsFormComponent {
         console.error(error);
       },
     });
+  }
+
+  loadGalleryImages(newsId:number): void {
+    this.newsService.getGallery(newsId).subscribe({
+      next: ((images: any[]) => {
+        this.existingGalleryImages = images.map((img, index) => ({
+          id: img.id,
+          file: null as any, // Não temos o File original
+          caption: img.caption || '',
+          alt_text: img.alt_text || '',
+          preview: img.image_url || img.thumbnail_url,
+          placeholder: `{{EXISTING_IMAGE_${img.id}}}`,
+          originalImage: img, // Salvar objeto original para referência
+          isExisting: true,
+        }))
+
+        this.galleryImages = [...this.existingGalleryImages]
+
+        this.updateContentWithGalleryPlaceholders()
+      }),
+      error: (error) => {
+        this.toastr.error('Erro ao carregar imagens da galeria');
+        console.error(error);
+      }
+    })
   }
 
   onMainImageSelected(event: Event): void {
@@ -294,6 +333,26 @@ export class NewsFormComponent {
 
       // this.newsForm.patchValue({ content: quillEditor.innerHTML });
     }
+  }
+  private updateContentWithGalleryPlaceholders(): void {
+    let content = this.newsForm.get('content')?.value
+
+    if(!content || this.existingGalleryImages.length === 0){
+      return
+    }
+
+    this.existingGalleryImages.forEach(galleryImage => {
+      if(galleryImage.preview && galleryImage.originalImage?.image_path){
+        const imageUrl = galleryImage.preview
+        const escapedUrl = imageUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const regex = new RegExp(escapedUrl, 'g')
+
+        content = content.replace(regex, galleryImage.placeholder)
+      }
+    })
+    console.log(this.galleryImages);
+    
+    this.newsForm.patchValue({ content })
   }
   private prepareFormData(): FormData {
     const formData = new FormData();
@@ -424,7 +483,7 @@ export class NewsFormComponent {
 
     const galleryFormData = new FormData()
     galleryImages.forEach((image, index) => {
-      galleryFormData.append(`images[${index}]`, image.file)
+      galleryFormData.append(`images[${index}]`, image.file || image.originalImage?.image_path)
       galleryFormData.append(`captions[${index}]`, image.caption)
       galleryFormData.append(`alt_texts[${index}]`, image.alt_text)
     })
@@ -445,7 +504,7 @@ export class NewsFormComponent {
 
     uploadedImages.forEach((uploadedImage) => {
       const galleryImage = this.galleryImages.find(
-        img => img.file.name === uploadedImage.original_name
+        img => img.file?.name === uploadedImage.original_name
       )
 
       if(galleryImage && uploadedImage.image_path) {
@@ -476,59 +535,80 @@ export class NewsFormComponent {
   private processContentImages(content: string): {
     content: string;
     images: GalleryImage[];
+    existingImageIds: number[]; // Adicionar para rastrear imagens existentes
   } {
     const parser = new DOMParser();
     const doc = parser.parseFromString(content, 'text/html');
     const imgElements = doc.getElementsByTagName('img');
     const processedImages: GalleryImage[] = [];
-
-    // Se for uma imagem da galeria (tem placeholder)
-    Array.from(imgElements).forEach((img, index) => {
+    const existingImageIds: number[] = [];
+  
+    Array.from(imgElements).forEach((img) => {
       const src = img.getAttribute('src');
       const placeholder = img.getAttribute('data-placeholder');
-
-      // Se for uma imagem da galeria (tem placeholder)
-      if (placeholder && this.galleryImages.length > 0) {
+  
+      // 1. Verificar se é uma imagem existente (placeholder de imagem existente)
+      if (placeholder && placeholder.startsWith('{{EXISTING_IMAGE_')) {
+        const match = placeholder.match(/{{EXISTING_IMAGE_(\d+)}}/);
+        if (match && match[1]) {
+          const imageId = parseInt(match[1]);
+          existingImageIds.push(imageId);
+          // Manter o placeholder para imagens existentes
+          img.setAttribute('src', placeholder);
+        }
+      }
+      // 2. Verificar se é placeholder de nova imagem
+      else if (placeholder && placeholder.startsWith('{{IMAGE_PLACEHOLDER_')) {
         const galleryIndex = this.galleryImages.findIndex(
           img => img.placeholder === placeholder
         );
-
+        
         if (galleryIndex !== -1) {
-          const galleryImage = this.galleryImages[galleryIndex]
-
-          // Substituir o preview pelo placeholder no conteúdo
+          const galleryImage = this.galleryImages[galleryIndex];
           img.setAttribute('src', placeholder);
-
-          // Adicionar à lista de imagens processadas se ainda não estiver
+          
           if (!processedImages.some(img => img.placeholder === placeholder)) {
             processedImages.push(galleryImage);
           }
         }
       }
-      // Se for base64 (imagem colada/arrastada diretamente)
-      else if(src && src.startsWith('data:image')) {
-        // Converter base64 para File
+      // 3. Verificar se é base64 (nova imagem colada)
+      else if (src && src.startsWith('data:image')) {
         const file = this.base64ToFile(src, `gallery-${Date.now()}.jpg`);
         const placeholder = `{{IMAGE_PLACEHOLDER_${processedImages.length}}}`;
         
         const galleryImage: GalleryImage = {
           file: file,
           caption: '',
-          alt_text: img.getAttribute('alt')|| '',
+          alt_text: img.getAttribute('alt') || '',
           preview: src,
           placeholder: placeholder
         };
-
-        img.setAttribute('src', placeholder)
-        img.setAttribute('data-placeholder', placeholder)
+        
+        img.setAttribute('src', placeholder);
+        img.setAttribute('data-placeholder', placeholder);
         
         processedImages.push(galleryImage);
       }
+      // 4. Se for URL completa (imagem já salva), converter para placeholder existente
+      else if (src && src.startsWith('http') && this.existingGalleryImages.length > 0) {
+        // Encontrar qual imagem existente corresponde a esta URL
+        const existingImage = this.existingGalleryImages.find(
+          img => img.preview === src || img.originalImage?.image_url === src
+        );
+        
+        if (existingImage && existingImage.id) {
+          img.setAttribute('src', existingImage.placeholder);
+          img.setAttribute('data-placeholder', existingImage.placeholder);
+          existingImageIds.push(existingImage.id);
+        }
+      }
     });
-
+  
     return {
       content: doc.body.innerHTML,
       images: processedImages,
+      existingImageIds
     };
   }
 
@@ -554,7 +634,7 @@ export class NewsFormComponent {
     return this.newsForm.get('excerpt');
   }
   get content() {
-    return this.newsForm.get('content');
+    return this.newsForm.get('content_with_full_urls');
   }
   get category_id() {
     return this.newsForm.get('category_id');

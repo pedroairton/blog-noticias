@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { NewsService } from '../../../core/services/news.service';
 import { Category } from '../../../core/models/category.model';
 import { ToastrService } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-categories',
-  imports: [],
+  imports: [MatIconModule, MatButtonModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
@@ -25,6 +27,12 @@ export class CategoriesComponent {
         console.error(error);
       },
     });
+  }
+  editCategory(category: Category){
+
+  }
+  deleteCategory(category: Category){
+
   }
 
   ngOnInit(): void {

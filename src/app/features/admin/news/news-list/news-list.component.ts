@@ -5,10 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../../environments/environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-news-list',
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, MatButtonModule, MatIconModule],
   templateUrl: './news-list.component.html',
   styleUrl: './news-list.component.scss',
 })

@@ -9,7 +9,9 @@ export interface News {
   slug: string;
   excerpt: string;
   content: string;
+  content_with_full_urls?: string;
   main_image?: string;
+  main_image_url?: string;
   main_image_caption?: string;
   main_image_alt?: string;
   is_published: boolean;

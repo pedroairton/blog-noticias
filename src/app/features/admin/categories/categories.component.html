@@ -1,11 +1,26 @@
 <section class="admin categorias">
-  <h1>Categorias</h1>
+  <div class="topo">
+    <h1>Categorias</h1>
+    <button mat-button class="btn-add">
+      <mat-icon>add</mat-icon>
+      Adicionar Categoria
+    </button>
+  </div>
   <div class="lista-categorias">
-
     @for (category of categories; track $index) {
     <div class="categoria">
       <h2>{{ category.name }}</h2>
       <p>{{ category.description || 'Sem descrição informada' }}</p>
+      <div class="buttons">
+        <button mat-button class="btn-edit" (click)="editCategory(category)">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-button class="btn-delete" (click)="deleteCategory(category)">
+          <mat-icon>delete</mat-icon>
+          Excluir
+        </button>
+      </div>
     </div>
     }
   </div>

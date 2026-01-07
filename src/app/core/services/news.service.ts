@@ -42,7 +42,9 @@ export class NewsService {
   }
 
   getNewsById(id: number): Observable<News> {
-    return this.api.get(`admin/news/${id}`)
+    return this.api.get(`admin/news/${id}`, {
+      include: 'category,author,tags,gallery'
+    })
   }
 
   createNews(formData: FormData): Observable<News> {
@@ -81,8 +83,8 @@ export class NewsService {
     return this.api.get('admin/tags')
   }
 
-  getGallery(newsId: number): Observable<GalleryImage[]> {
-    return this.api.get<GalleryImage[]>(`admin/news/${newsId}/gallery`)
+  getGallery(newsId: number): Observable<any[]> {
+    return this.api.get(`admin/news/${newsId}/gallery`)
   }
 
   uploadGalleryImages(newsId: number, formData: FormData): Observable<any> {
