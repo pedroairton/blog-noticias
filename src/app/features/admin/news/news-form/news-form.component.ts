@@ -434,7 +434,7 @@ export class NewsFormComponent {
   }
   updateNews(formData: FormData, galleryImages: GalleryImage[]): void {
     if (!this.newsId) return;
-
+    console.log(formData);
     this.newsService.updateNews(this.newsId, formData).subscribe({
       next: (response: any) => {
         this.toastr.success('Notícia atualizada com sucesso!');
@@ -442,7 +442,7 @@ export class NewsFormComponent {
           this.uploadGalleryImages(this.newsId!, galleryImages);
         } else {
           this.isLoading = false;
-          this.router.navigate(['/admin/noticias']);
+          // this.router.navigate(['/admin/noticias']);
         }
       },
       error: (error) => {
@@ -500,37 +500,45 @@ export class NewsFormComponent {
     })
   }
   private updateContentWithRealImageUrls(newsId: number, uploadedImages: any[]): void {
-    let content = this.newsForm.value.content
+  let content = this.newsForm.value.content;
 
-    uploadedImages.forEach((uploadedImage) => {
-      const galleryImage = this.galleryImages.find(
-        img => img.file?.name === uploadedImage.original_name
-      )
+  uploadedImages.forEach((uploadedImage) => {
+    const galleryImage = this.galleryImages.find(
+      img => img.file?.name === uploadedImage.original_name
+    );
 
-      if(galleryImage && uploadedImage.image_path) {
-        const imageUrl = uploadedImage.image_path
+    if (galleryImage && uploadedImage.image_path) {
+      const imageUrl = uploadedImage.image_path;
+      const fullImageUrl = `${environment.apiUrl.replace('/api', '')}/storage/${imageUrl}`;
+      
+      content = content.replace(
+        new RegExp(galleryImage.placeholder, 'g'),
+        fullImageUrl
+      );
+    }
+  });
 
-        content = content.replace(
-          new RegExp(galleryImage.placeholder, 'g'),
-          imageUrl
-        )
-       }
-    })
+  // Atualizar o form com o novo conteúdo
+  this.newsForm.patchValue({ content });
 
-    this.newsService.updateNews(newsId, {content}).subscribe({
-      next: () => {
-        this.toastr.success('Imagens da galeria enviadas com sucesso!')
-        this.isLoading = false
-        this.router.navigate(['/admin/noticias'])
-      },
-      error: (error) => {
-        console.error('Erro ao atualizar conteúdo com URLs', error);
-        this.toastr.warning('Imagens enviadas, mas conteúdo não foi atualizado')
-        this.isLoading = false
-        this.router.navigate(['/admin/noticias'])
-      }
-    })
-  }
+  // Criar FormData completo usando prepareFormData
+  const formData = this.prepareFormData();
+
+  // Atualizar novamente a notícia com tudo
+  this.newsService.updateNews(newsId, formData).subscribe({
+    next: () => {
+      this.toastr.success('Imagens da galeria enviadas com sucesso!');
+      this.isLoading = false;
+      this.router.navigate(['/admin/noticias']);
+    },
+    error: (error) => {
+      console.error('Erro ao atualizar conteúdo com URLs:', error);
+      this.toastr.warning('Imagens enviadas, mas conteúdo não foi atualizado');
+      this.isLoading = false;
+      this.router.navigate(['/admin/noticias']);
+    }
+  });
+}
   // Método para extrair e processar imagens base64 do conteúdo
   private processContentImages(content: string): {
     content: string;

@@ -51,7 +51,9 @@ export class NewsService {
     return this.api.post('admin/news', formData)
   }
 
-  updateNews(id: number, formData: any): Observable<News> {
+  updateNews(id: number, formData: FormData): Observable<News> {    
+    console.log(formData);
+    
     return this.api.put(`admin/news/${id}`, formData)
   }
 
