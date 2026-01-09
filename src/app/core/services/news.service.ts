@@ -57,6 +57,16 @@ export class NewsService {
     return this.api.put(`admin/news/${id}`, formData)
   }
 
+  updateNewsContent(id: number, data: any): Observable<any> {
+    const formData = new FormData();
+    Object.keys(data).forEach(key => {
+      formData.append(key, data[key]);
+    });
+    formData.append('_method', 'PUT');
+    
+    return this.api.post(`admin/news/${id}`, formData);
+  }
+
   deleteNews(id: number): Observable<any> {
     return this.api.delete(`admin/news/${id}`)
   }

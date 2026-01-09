@@ -215,8 +215,10 @@ export class NewsFormComponent {
         }))
 
         this.galleryImages = [...this.existingGalleryImages]
+        console.log(this.galleryImages);
+        
 
-        this.updateContentWithGalleryPlaceholders()
+        // this.updateContentWithGalleryPlaceholders()
       }),
       error: (error) => {
         this.toastr.error('Erro ao carregar imagens da galeria');
@@ -400,17 +402,61 @@ export class NewsFormComponent {
   
     // Processar imagens do conteúdo (isso agora manterá URLs das imagens existentes)
     const processed = this.processContentImages(this.newsForm.value.content);
-  
-    // Atualizar conteúdo com placeholders APENAS para novas imagens
-    this.newsForm.patchValue({ content: processed.content });
-  
-    const formData = this.prepareFormData();
-  
-    if (this.isEditMode && this.newsId) {
-      this.updateNews(formData, processed.images, processed.existingImageIds);
+
+    if(processed.images.length > 0) {
+      const contentWithPlaceholders = this.newsForm.value.content
+      this.newsForm.patchValue({content: processed.content})
+
+      const formData = this.prepareFormData();
+
+      formData.append('gallery_processed', 'true')
+
+      if(this.isEditMode && this.newsId) {
+        this.updateNewsWithGallery(formData, processed.images, processed.existingImageIds)
+      } else {
+        this.createNewsWithGallery(formData, processed.images, processed.existingImageIds)
+      }
     } else {
-      this.createNews(formData, processed.images, processed.existingImageIds);
+      const formData = this.prepareFormData();
+
+      if (this.isEditMode && this.newsId) {
+        this.updateNews(formData, processed.images, processed.existingImageIds);
+      } else {
+        this.createNews(formData, processed.images, processed.existingImageIds);
+      }
     }
+  }
+  createNewsWithGallery(formData: FormData, galleryImages: GalleryImage[], existingImageIds: number[]): void {
+    this.newsService.createNews(formData).subscribe({
+      next: (response: any) => {
+        const newsId = response.news.id;
+        this.toastr.success('Notícia criada com sucesso!');
+        
+        // Upload das imagens da galeria
+        this.uploadGalleryImagesAndUpdateContent(newsId, galleryImages, existingImageIds);
+      },
+      error: (error) => {
+        this.toastr.error(error.error?.message || 'Erro ao criar notícia');
+        this.isLoading = false;
+      },
+    });
+  }
+  updateNewsWithGallery(formData: FormData, galleryImages: GalleryImage[], existingImageIds: number[]): void {
+    if (!this.newsId) return;
+  
+    this.newsService.updateNews(this.newsId, formData).subscribe({
+      next: (response: any) => {
+        this.toastr.success('Notícia atualizada com sucesso!');
+        
+        // Upload das novas imagens da galeria
+        const newImages = galleryImages.filter(img => !img.isExisting);
+        this.uploadGalleryImagesAndUpdateContent(this.newsId!, newImages, existingImageIds);
+      },
+      error: (error) => {
+        this.toastr.error(error.error?.message || 'Erro ao atualizar notícia');
+        this.isLoading = false;
+      },
+    });
   }
   createNews(formData: FormData, galleryImages: GalleryImage[], existingImageIds: number[]): void {
     this.newsService.createNews(formData).subscribe({
@@ -469,6 +515,85 @@ export class NewsFormComponent {
     }
     this.newsForm.patchValue({ is_published: true });
     this.onSubmit();
+  }
+
+  private uploadGalleryImagesAndUpdateContent(newsId: number, galleryImages: GalleryImage[], existingImageIds: number[] = []): void {
+    if (galleryImages.length === 0) {
+      this.isLoading = false;
+      this.router.navigate(['/admin/noticias']);
+      return;
+    }
+  
+    const galleryFormData = new FormData();
+    
+    // Adicionar novas imagens
+    galleryImages.forEach((image, index) => {
+      if (image.file) {
+        galleryFormData.append(`images[${index}]`, image.file);
+        galleryFormData.append(`captions[${index}]`, image.caption);
+        galleryFormData.append(`alt_texts[${index}]`, image.alt_text);
+      }
+    });
+  
+    // Adicionar IDs de imagens existentes
+    if (existingImageIds.length > 0) {
+      galleryFormData.append('existing_image_ids', JSON.stringify(existingImageIds));
+    }
+  
+    this.newsService.uploadGalleryImages(newsId, galleryFormData).subscribe({
+      next: (response: any) => {
+        // Após upload, atualizar conteúdo substituindo placeholders por URLs
+        this.finalizeContentWithImageUrls(newsId, response.images);
+      },
+      error: (error) => {
+        console.error('Erro ao enviar imagens da galeria', error);
+        this.toastr.warning('Notícia salva, mas algumas imagens não foram enviadas');
+        this.isLoading = false;
+        this.router.navigate(['/admin/noticias']);
+      }
+    });
+  }
+
+  private finalizeContentWithImageUrls(newsId: number, uploadedImages: any[]): void {
+    // Buscar notícia atualizada para pegar o conteúdo com placeholders
+    this.newsService.getNewsById(newsId).subscribe({
+      next: (news) => {
+        let content = news.content;
+        
+        // Substituir placeholders pelas URLs das imagens enviadas
+        uploadedImages.forEach((uploadedImage, index) => {
+          const placeholder = `{{IMAGE_PLACEHOLDER_${index}}}`;
+          const imageUrl = `${environment.apiUrl.replace('/api', '')}/storage/${uploadedImage.image_path}`;
+          
+          if (content.includes(placeholder)) {
+            content = content.replace(
+              new RegExp(placeholder, 'g'),
+              imageUrl
+            );
+          }
+        });
+  
+        // Atualizar o conteúdo final com URLs
+        this.newsService.updateNewsContent(newsId, { content }).subscribe({
+          next: () => {
+            this.toastr.success('Notícia e imagens salvas com sucesso!');
+            this.isLoading = false;
+            this.router.navigate(['/admin/noticias']);
+          },
+          error: (error) => {
+            console.error('Erro ao atualizar conteúdo final:', error);
+            this.toastr.warning('Imagens enviadas, mas conteúdo não foi atualizado');
+            this.isLoading = false;
+            this.router.navigate(['/admin/noticias']);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Erro ao buscar notícia atualizada:', error);
+        this.isLoading = false;
+        this.router.navigate(['/admin/noticias']);
+      }
+    });
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {
@@ -585,8 +710,7 @@ export class NewsFormComponent {
       const placeholder = img.getAttribute('data-placeholder');
       const imageId = img.getAttribute('data-image-id');
       console.log(img);
-      
-  
+    
       // 1. Imagem existente da galeria (já rastreada)
       if (imageId) {
         const id = parseInt(imageId);
@@ -625,7 +749,7 @@ export class NewsFormComponent {
         }
       }
       // 4. Imagem base64 (nova imagem colada/arrastada)
-      if (src && src.startsWith('data:image')) {
+      else if (src && src.startsWith('data:image')) {
         console.log(img);
         
         const file = this.base64ToFile(src, `gallery-${Date.now()}.jpg`);

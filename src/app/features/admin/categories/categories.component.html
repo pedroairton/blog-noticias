@@ -6,6 +6,10 @@
       Adicionar Categoria
     </button>
   </div>
+  @if (isLoading) {
+    <mat-spinner diameter="50"></mat-spinner>
+  } 
+  @else if (!isLoading && categories.length > 0) {
   <div class="lista-categorias">
     @for (category of categories; track $index) {
     <div class="categoria">
@@ -24,4 +28,7 @@
     </div>
     }
   </div>
+  } @else {
+    <p>Nenhuma categoria encontrada.</p>
+  }
 </section>
