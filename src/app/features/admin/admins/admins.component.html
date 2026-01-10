@@ -1,0 +1,33 @@
+<section class="admin page-admins">
+  <div class="topo">
+    <h1>Usuários</h1>
+    <button mat-button class="btn-add">
+      <mat-icon>add</mat-icon>
+      Adicionar Usuário
+    </button>
+  </div>
+  @if (isLoading) {
+    <mat-spinner diameter="50"></mat-spinner>
+  } 
+  @else if (!isLoading && (admins.authors.length > 0 || admins.admins.length > 0)) {
+    <div class="lista-admins">
+      <h2>Autores</h2>
+      @for (author of admins.authors; track $index) {
+        <div class="admin">
+          <h2>{{ author.name }}</h2>
+          <p>{{ author.email }}</p>
+        </div>
+      }
+      <h2>Administradores</h2>
+      @for (admin of admins.admins; track $index) {
+        <div class="admin">
+          <h2>{{ admin.name }}</h2>
+          <p>{{ admin.email }}</p>
+        </div>
+      }
+    </div>
+  }
+  @else {
+    <p>Nenhum usuário encontrado</p>
+  }
+</section>

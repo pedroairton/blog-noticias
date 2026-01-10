@@ -123,4 +123,8 @@ export class NewsService {
   reorderGallery(newsId: number, images: {id: number, position: number}[]): Observable<any> {
     return this.api.put(`admin/news/${newsId}/gallery/reorder`, {images})
   }
+
+  getAdmins(): Observable<any> {
+    return this.api.get('admin/admins')
+  }
 }

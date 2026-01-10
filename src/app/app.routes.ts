@@ -91,6 +91,14 @@ export const routes: Routes = [
           ),
           canActivate: [adminGuard]
       },
+      {
+        path: 'admins',
+        loadComponent: () =>
+          import('./features/admin/admins/admins.component').then(
+            (m) => m.AdminsComponent
+          ),
+          canActivate: [adminGuard]
+      },
     ],
   },
   {

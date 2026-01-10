@@ -1,0 +1,21 @@
+.page-admins {
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  .topo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .btn-add {
+      background-color: #1aa04e;
+      color: white;
+      transition: 0.3s;
+      &:hover {
+        background-color: #20b558;
+      }
+    }
+  }
+}
