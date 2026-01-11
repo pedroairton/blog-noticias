@@ -56,4 +56,32 @@ export class NewsListComponent {
       });
     }
   }
+  publishNews(id: number) {
+    if(confirm('Deseja realmente publicar esta notícia?')) {
+      this.newsService.publishNews(id).subscribe({
+        next: () => {
+          this.getNews();
+          this.toastr.success('Notícia publicada com sucesso');
+        },
+        error: (error) => {
+          this.toastr.error('Erro ao publicar notícia');
+          console.error(error);
+        },
+      });
+    }
+  }
+  unpublishNews(id: number) {
+    if(confirm('Deseja realmente despublicar esta notícia?')) {
+      this.newsService.unpublishNews(id).subscribe({
+        next: () => {
+          this.getNews();
+          this.toastr.success('Notícia despublicada com sucesso');
+        },
+        error: (error) => {
+          this.toastr.error('Erro ao despublicar notícia');
+          console.error(error);
+        },
+      });
+    }
+  }
 }

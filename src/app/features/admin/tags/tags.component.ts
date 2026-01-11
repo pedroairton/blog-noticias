@@ -5,6 +5,8 @@ import { Tag } from '../../../core/models/tag.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TagDialogComponent } from '../dialog/tag-dialog/tag-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -20,6 +22,8 @@ protected newsService = inject(NewsService);
 
   tags: Tag[] = [];
 
+  constructor(private dialog: MatDialog) {}
+
   loadTags(): void {
     this.isLoading = true;
     this.newsService.getTags().subscribe({
@@ -32,6 +36,32 @@ protected newsService = inject(NewsService);
         this.toastr.error('Erro ao carregar tags');
         console.error(error);
       },
+    });
+  }
+
+  editTag(tag: Tag) {
+    this.dialog.open(TagDialogComponent, {
+      width: '500px',
+      data: tag
+    });
+  }
+  deleteTag(tag: Tag) {
+    if(!confirm('Deseja excluir esta tag?')) return;
+    this.newsService.deleteTag(tag.id).subscribe({
+      next: () => {
+        this.loadTags();
+        this.toastr.success('Tag excluída com sucesso');
+      },
+      error: () => {
+        this.toastr.error('Erro ao excluir tag');
+      }
+    });
+  }
+      
+  openDialog() {
+    this.dialog.open(TagDialogComponent, {
+      width: '500px',
+      data: {}
     });
   }
 

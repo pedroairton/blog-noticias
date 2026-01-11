@@ -1,0 +1,11 @@
+<div class="dialog">
+    <h2>{{ data?.id ? 'Editar tag' : 'Criar tag' }}</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="tagForm">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+      <mat-icon matSuffix>title</mat-icon>
+    </mat-form-field>
+    <button mat-button color="primary" type="submit" [disabled]="tagForm.invalid">Salvar</button>
+  </form>
+</div>

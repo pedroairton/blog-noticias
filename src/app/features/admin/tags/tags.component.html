@@ -1,7 +1,7 @@
 <section class="admin tags">
   <div class="topo">
     <h1>Tags</h1>
-    <button mat-button class="btn-add">
+    <button mat-button class="btn-add" (click)="openDialog()">
       <mat-icon>add</mat-icon>
       Adicionar Tag
     </button>
@@ -14,6 +14,16 @@
     @for (tag of tags; track $index) {
     <div class="tag">
       <h2>{{ tag.name }}</h2>
+      <div class="buttons">
+        <button mat-button class="btn-edit" (click)="editTag(tag)">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-button class="btn-delete" (click)="deleteTag(tag)">
+          <mat-icon>delete</mat-icon>
+          Excluir
+        </button>
+      </div>
     </div>
     }
   </div>

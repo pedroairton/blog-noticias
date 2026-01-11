@@ -1,0 +1,16 @@
+<div class="dialog">
+  <h2>{{ data?.id ? 'Editar categoria' : 'Criar categoria' }}</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="categoryForm">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+      <mat-icon matSuffix>title</mat-icon>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="description" />
+      <mat-icon matSuffix>description</mat-icon>
+    </mat-form-field>
+    <button mat-button color="primary" type="submit" [disabled]="categoryForm.invalid">Salvar</button>
+  </form>
+</div>

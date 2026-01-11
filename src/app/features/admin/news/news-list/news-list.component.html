@@ -18,6 +18,18 @@
                 <img [src]="`${storageUrl}/${item.main_image}`" alt="">
             </div>
             <div class="infos-noticia">
+                @if (item.is_published) {
+                    <small class="status published" (click)="unpublishNews(item.id)">
+                        <mat-icon>check_circle_outline</mat-icon>
+                        <span>Publicado</span>
+                    </small>
+                }
+                @else {
+                    <small class="status draft" (click)="publishNews(item.id)">
+                        <mat-icon>schedule</mat-icon>
+                        <span>Rascunho</span>
+                    </small>
+                }
                 <span class="categoria">{{ item.category?.name }}</span>
                 <h2>{{ item.title }}</h2>
                 <div class="excerpt" [innerHTML]="sanitizeHtml(item.excerpt)"></div>

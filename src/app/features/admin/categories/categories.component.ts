@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { CategoryDialogComponent } from '../dialog/category-dialog/category-dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -18,6 +20,20 @@ export class CategoriesComponent {
   isLoading = false;
 
   categories: Category[] = [];
+
+  constructor(private dialog: MatDialog) {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CategoryDialogComponent, {
+      width: '500px',
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.loadCategories();
+      }
+    });
+  }
 
   loadCategories(): void {
     this.isLoading = true;
@@ -34,10 +50,27 @@ export class CategoriesComponent {
     });
   }
   editCategory(category: Category){
-
+    const dialogRef = this.dialog.open(CategoryDialogComponent, {
+      width: '500px',
+      data: category
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.loadCategories();
+      }
+    });
   }
   deleteCategory(category: Category){
-
+    if(!confirm('Deseja excluir esta categoria?')) return;
+    this.newsService.deleteCategory(category.id).subscribe({
+      next: () => {
+        this.loadCategories();
+        this.toastr.success('Categoria excluída com sucesso');
+      },
+      error: () => {
+        this.toastr.error('Erro ao excluir categoria');
+      }
+    });
   }
 
   ngOnInit(): void {

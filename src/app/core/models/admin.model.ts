@@ -6,6 +6,7 @@ export interface Admin {
   slug: string;
   bio?: string;
   avatar?: string;
+  avatar_url?: string;
   website?: string;
   social_facebook?: string;
   social_twitter?: string;

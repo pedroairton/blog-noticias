@@ -48,13 +48,20 @@ export class NewsService {
   }
 
   createNews(formData: FormData): Observable<News> {
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     return this.api.post('admin/news', formData)
   }
 
-  updateNews(id: number, formData: FormData): Observable<News> {    
-    console.log(formData);
+  // update precisa ser feito com POST, bug do laravel com PUT
+  updateNews(id: number, formData: FormData): Observable<News> { 
+    // formData.append('_method', 'PUT');   
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     
-    return this.api.put(`admin/news/${id}`, formData)
+    return this.api.post(`admin/news/${id}`, formData)
   }
 
   updateNewsContent(id: number, data: any): Observable<any> {
@@ -91,8 +98,28 @@ export class NewsService {
     return this.api.get('admin/categories')
   }
 
+  updateCategory(id: number, data: any): Observable<Category> {
+    return this.api.put(`admin/categories/${id}`, data)
+  }
+
+  createCategory(data: any): Observable<Category> {
+    return this.api.post('admin/categories', data)
+  }
+  deleteCategory(id: number): Observable<any> {
+    return this.api.delete(`admin/categories/${id}`)
+  }
+
   getTags(): Observable<Tag[]> {
     return this.api.get('admin/tags')
+  }
+  createTag(data: any): Observable<Tag> {
+    return this.api.post('admin/tags', data)
+  }
+  updateTag(id: number, data: any): Observable<Tag> {
+    return this.api.put(`admin/tags/${id}`, data)
+  }
+  deleteTag(id: number): Observable<any> {
+    return this.api.delete(`admin/tags/${id}`)
   }
 
   getGallery(newsId: number): Observable<any[]> {
