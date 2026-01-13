@@ -154,4 +154,16 @@ export class NewsService {
   getAdmins(): Observable<any> {
     return this.api.get('admin/admins')
   }
+
+  getAdminById(id: number): Observable<any> {
+    return this.api.get(`admin/admins/${id}`)
+  }
+
+  updateAdmin(id: number, data: any): Observable<any> {
+    return this.api.put(`admin/admins/${id}`, data)
+  }
+
+  deleteAdmin(id: number): Observable<any> {
+    return this.api.delete(`admin/admins/${id}`)
+  }
 }

@@ -1,7 +1,7 @@
 <section class="admin page-admins">
   <div class="topo">
     <h1>Usuários</h1>
-    <button mat-button class="btn-add">
+    <button (click)="openDialog()" mat-button class="btn-add">
       <mat-icon>add</mat-icon>
       Adicionar Usuário
     </button>
@@ -164,11 +164,11 @@
           <small><i>{{ author.bio }}</i></small>
         </div>
         <div class="buttons">
-        <button mat-button class="btn-edit">
+        <button (click)="editAdmin(author)" mat-button class="btn-edit">
           <mat-icon>edit</mat-icon>
           Editar
         </button>
-        <button mat-button class="btn-delete">
+        <button (click)="deleteAdmin(author)" mat-button class="btn-delete">
           <mat-icon>delete</mat-icon>
           Excluir
         </button>

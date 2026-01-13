@@ -1,1 +1,70 @@
-<p>admin-dialog works!</p>
+<div class="dialog">
+    <h2>{{ data?.id ? 'Editar Administrador' : 'Criar Administrador' }}</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="adminForm">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" />
+        <mat-icon matSuffix>title</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="password_confirmation" type="password" />
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Bio</mat-label>
+        <input matInput formControlName="bio" />
+        <mat-icon matSuffix>description</mat-icon>
+      </mat-form-field>
+      <!-- <mat-form-field>
+        <mat-label>Avatar</mat-label>
+        <input matInput formControlName="avatar" type="file" />
+        <mat-icon matSuffix>image</mat-icon>
+      </mat-form-field> -->
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="editor">Editor</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_circle</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Website</mat-label>
+        <input matInput formControlName="website" />
+        <mat-icon matSuffix>link</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Social Facebook</mat-label>
+        <input matInput formControlName="social_facebook" />
+        <mat-icon matSuffix>facebook</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Social Twitter</mat-label>
+        <input matInput formControlName="social_twitter" />
+        <mat-icon matSuffix>twitter</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Social Instagram</mat-label>
+        <input matInput formControlName="social_instagram" />
+        <mat-icon matSuffix>instagram</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Social LinkedIn</mat-label>
+        <input matInput formControlName="social_linkedin" />
+        <mat-icon matSuffix>linkedin</mat-icon>
+      </mat-form-field>
+      <button mat-button color="primary" type="submit" [disabled]="adminForm.invalid">Salvar</button>
+    </form>
+  </div>
+  

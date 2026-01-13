@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Admin } from '../../../core/models/admin.model';
+import { AdminDialogComponent } from '../dialog/admin-dialog/admin-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admins',
@@ -17,6 +19,8 @@ export class AdminsComponent {
   protected newsService = inject(NewsService);
   private toastr = inject(ToastrService);
   isLoading = false;
+
+  constructor(private dialog: MatDialog) {}
 
   admins: {authors: Admin[], admins: Admin[]} = {authors: [], admins: []};
 
@@ -40,6 +44,32 @@ export class AdminsComponent {
     });
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AdminDialogComponent, {
+      width: '500px',
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result) {
+        this.loadAdmins();
+      }
+    });
+  }
+  editAdmin(author: Admin): void {
+    const dialogRef = this.dialog.open(AdminDialogComponent, {
+      width: '500px',
+      data: author
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result) {
+        this.loadAdmins();
+      }
+    });
+  }
+  deleteAdmin(author: Admin): void {
+    if(!confirm('Deseja excluir este administrador?')) return;
+    this.isLoading = true;
+  }
   ngOnInit(): void {
     this.loadAdmins();
   }
