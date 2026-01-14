@@ -21,9 +21,9 @@
         <input matInput formControlName="password_confirmation" type="password" />
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="textarea">
         <mat-label>Bio</mat-label>
-        <input matInput formControlName="bio" />
+        <textarea matInput formControlName="bio"></textarea>
         <mat-icon matSuffix>description</mat-icon>
       </mat-form-field>
       <!-- <mat-form-field>
@@ -32,10 +32,10 @@
         <mat-icon matSuffix>image</mat-icon>
       </mat-form-field> -->
       <mat-form-field>
-        <mat-label>Role</mat-label>
+        <mat-label>Cargo</mat-label>
         <mat-select formControlName="role">
-          <mat-option value="admin">Admin</mat-option>
-          <mat-option value="editor">Editor</mat-option>
+          <mat-option value="superadmin">Administrador</mat-option>
+          <mat-option value="author">Editor</mat-option>
         </mat-select>
         <mat-icon matSuffix>account_circle</mat-icon>
       </mat-form-field>
