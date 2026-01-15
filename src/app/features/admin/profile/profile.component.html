@@ -4,12 +4,12 @@
     @if (admin) {
     <button mat-button class="btn-edit" (click)="editUser()">
       <mat-icon>edit</mat-icon>
-      Editar Perfil
+      Customizar Perfil
     </button>
     }
   </div>
   @if (isLoading) {
-  <p>Carregando...</p>
+    <mat-spinner diameter="50"></mat-spinner>
   } @else if (admin) {
   <div class="perfil">
     <div class="topo-perfil">

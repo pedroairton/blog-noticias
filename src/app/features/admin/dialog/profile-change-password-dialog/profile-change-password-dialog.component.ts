@@ -28,7 +28,7 @@ export class ProfileChangePasswordDialogComponent {
   changePasswordForm: FormGroup = this.fb.group({
     current_password: ['', [Validators.required]],
     new_password: ['', [Validators.required, Validators.minLength(8)]],
-    confirm_password: ['', [Validators.required, Validators.minLength(8)]]
+    new_password_confirmation: ['', [Validators.required, Validators.minLength(8)]]
   })
 
   onSubmit(){

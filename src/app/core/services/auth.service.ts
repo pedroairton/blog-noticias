@@ -102,7 +102,15 @@ export class AuthService {
   }
 
   // users
-  changePassword(passwords: { current_password: string, new_password: string, confirm_password: string }): Observable<any> {
-    return this.api.post('profile/password', passwords)
+  changePassword(passwords: { current_password: string, new_password: string, new_password_confirmation: string }): Observable<any> {
+    return this.api.put('profile/password', passwords)
+  }
+  updateProfile(formData: FormData) {
+    console.log('updateProfile');
+    
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+      }
+    return this.api.post('profile', formData)
   }
 }

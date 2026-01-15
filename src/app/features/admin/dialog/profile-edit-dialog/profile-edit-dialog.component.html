@@ -1,15 +1,18 @@
 <div class="dialog">
-  <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="profileForm" enctype="multipart/form-data">
     <div class="avatar">
-      <img [src]="data?.avatar_url" alt="avatar" />
+      <img [src]="avatarPreview || data?.avatar_url" alt="avatar" />
       <div class="upload">
-        <input #avatarInput type="file" accept="image/*" />
+        <input #avatarInput type="file" accept="image/*" (change)="onAvatarSelected($event)" />
         <mat-icon>cloud_upload</mat-icon>
         <p>Arraste uma imagem ou clique para selecionar</p>
-        <button mat-button color="primary" type="button">
+        <button mat-button color="primary" type="button" (click)="avatarInput.click()">
           <mat-icon>upload</mat-icon>
           Selecionar Imagem de Perfil
         </button>
+        @if(selectedFile){
+          <p>{{selectedFile.name}}</p>
+        }
       </div>
     </div>
     <mat-form-field>

@@ -4,12 +4,13 @@ import { Admin } from '../../../core/models/admin.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProfileEditDialogComponent } from '../dialog/profile-edit-dialog/profile-edit-dialog.component';
 import { ProfileChangePasswordDialogComponent } from '../dialog/profile-change-password-dialog/profile-change-password-dialog.component';
 
 @Component({
   selector: 'app-profile',
-  imports: [MatIconModule, MatButtonModule],
+  imports: [MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
