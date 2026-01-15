@@ -159,6 +159,10 @@ export class NewsService {
     return this.api.get(`admin/admins/${id}`)
   }
 
+  createAdmin(data: any): Observable<any> {
+    return this.api.post('admin/admins', data)
+  }
+
   updateAdmin(id: number, data: any): Observable<any> {
     return this.api.put(`admin/admins/${id}`, data)
   }

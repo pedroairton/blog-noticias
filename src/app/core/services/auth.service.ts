@@ -100,4 +100,9 @@ export class AuthService {
   private get isBrowser(): boolean {
     return isPlatformBrowser(this.platformId)
   }
+
+  // users
+  changePassword(passwords: { current_password: string, new_password: string, confirm_password: string }): Observable<any> {
+    return this.api.post('profile/password', passwords)
+  }
 }

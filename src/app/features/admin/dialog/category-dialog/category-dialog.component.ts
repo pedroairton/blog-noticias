@@ -66,8 +66,14 @@ export class CategoryDialogComponent {
         },
         error: () => {
           this.toastr.error('Erro ao criar categoria');
-        }
+        },
       });
     }
+  }
+  get name() {
+    return this.categoryForm.get('name');
+  }
+  get description() {
+    return this.categoryForm.get('description');
   }
 }

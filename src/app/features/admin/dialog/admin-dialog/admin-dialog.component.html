@@ -1,70 +1,71 @@
 <div class="dialog">
-    <h2>{{ data?.id ? 'Editar Administrador' : 'Criar Administrador' }}</h2>
-    <form (ngSubmit)="onSubmit()" [formGroup]="adminForm">
-      <mat-form-field>
-        <mat-label>Nome</mat-label>
-        <input matInput formControlName="name" />
-        <mat-icon matSuffix>title</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-        <mat-icon matSuffix>email</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" />
-        <mat-icon matSuffix>lock</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Confirm Password</mat-label>
-        <input matInput formControlName="password_confirmation" type="password" />
-        <mat-icon matSuffix>lock</mat-icon>
-      </mat-form-field>
-      <mat-form-field class="textarea">
-        <mat-label>Bio</mat-label>
-        <textarea matInput formControlName="bio"></textarea>
-        <mat-icon matSuffix>description</mat-icon>
-      </mat-form-field>
-      <!-- <mat-form-field>
-        <mat-label>Avatar</mat-label>
-        <input matInput formControlName="avatar" type="file" />
-        <mat-icon matSuffix>image</mat-icon>
-      </mat-form-field> -->
-      <mat-form-field>
-        <mat-label>Cargo</mat-label>
-        <mat-select formControlName="role">
-          <mat-option value="superadmin">Administrador</mat-option>
-          <mat-option value="author">Editor</mat-option>
-        </mat-select>
-        <mat-icon matSuffix>account_circle</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Website</mat-label>
-        <input matInput formControlName="website" />
-        <mat-icon matSuffix>link</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Social Facebook</mat-label>
-        <input matInput formControlName="social_facebook" />
-        <mat-icon matSuffix>facebook</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Social Twitter</mat-label>
-        <input matInput formControlName="social_twitter" />
-        <mat-icon matSuffix>twitter</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Social Instagram</mat-label>
-        <input matInput formControlName="social_instagram" />
-        <mat-icon matSuffix>instagram</mat-icon>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Social LinkedIn</mat-label>
-        <input matInput formControlName="social_linkedin" />
-        <mat-icon matSuffix>linkedin</mat-icon>
-      </mat-form-field>
-      <button mat-button color="primary" type="submit" [disabled]="adminForm.invalid">Salvar</button>
-    </form>
-  </div>
-  
+  <h2>{{ data?.id ? "Editar Administrador" : "Criar Administrador" }}</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="adminForm">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+      <mat-icon matSuffix>account_circle</mat-icon>
+      @if (name?.invalid && name?.touched) { 
+          <mat-error>
+            O nome é obrigatório 
+          
+          </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-icon matSuffix>email</mat-icon>
+      @if (email?.invalid && email?.touched) {
+      <mat-error>
+        @if (email?.errors?.['required']) { O email é obrigatório }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-icon matSuffix>lock</mat-icon>
+      @if (password?.invalid && password?.touched) {
+      <mat-error>
+        @if (password?.errors?.['required']) { A senha é obrigatória }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Confirmar Senha</mat-label>
+      <input matInput formControlName="password_confirmation" type="password" />
+      <mat-icon matSuffix>lock</mat-icon>
+      @if (password_confirmation?.invalid && password_confirmation?.touched) {
+      <mat-error>
+        @if (password_confirmation?.errors?.['required']) { A confirmação de
+        senha é obrigatória }
+      </mat-error>
+      } @if (password?.value !== password_confirmation?.value) {
+      <mat-error> As senhas não coincidem </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Cargo</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="" disabled>Selecione um cargo</mat-option>
+        <mat-option value="author">Editor</mat-option>
+        <mat-option value="superadmin">Administrador</mat-option>
+      </mat-select>
+      <mat-icon matSuffix>work</mat-icon>
+      @if (role?.invalid && role?.touched) {
+      <mat-error>
+        @if (role?.errors?.['required']) { O cargo é obrigatório }
+      </mat-error>
+      }
+    </mat-form-field>
+    <button
+      mat-button
+      color="primary"
+      type="submit"
+      [disabled]="adminForm.invalid"
+    >
+      Salvar
+    </button>
+  </form>
+</div>

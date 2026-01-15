@@ -25,7 +25,6 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { GalleryImageDialogComponent } from '../../dialog/gallery-image-dialog/gallery-image-dialog.component';
 import { environment } from '../../../../../environments/environment';
-import { env } from 'process';
 
 interface GalleryImage {
   id?: number;

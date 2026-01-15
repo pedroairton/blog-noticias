@@ -14,6 +14,7 @@ export interface Admin {
   social_linkedin?: string;
   created_at: string;
   updated_at: string;
+  published_news_count?: number;
 }
 
 export interface LoginRequest {

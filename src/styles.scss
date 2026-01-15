@@ -1,9 +1,11 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 :root {
-  @include mat.select-overrides((
-    panel-background-color: #fff,
-  ));
+  @include mat.select-overrides(
+    (
+      panel-background-color: #fff,
+    )
+  );
   --mat-option-selected-state-layer-color: #f0f0f0;
   --mat-option-hover-state-layer-color: #d0d0d0;
 }
@@ -21,7 +23,7 @@ body {
 }
 button {
   border: none;
-  transition: .3s;
+  transition: 0.3s;
 }
 a {
   color: inherit;
@@ -37,9 +39,17 @@ section {
   margin: 0 auto;
   margin-top: 160px;
 }
-section.admin{
-  width: 100%;
+section.admin {
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
 }
-mat-spinner{
+mat-spinner {
   stroke: #2c53af;
+}
+mat-error {
+  color: red !important;
+}
+mat-hint {
+  color: #505050 !important;
 }

@@ -38,14 +38,7 @@ export class AdminDialogComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
-    avatar: ['', [Validators.required]],
-    bio: ['', [Validators.maxLength(255), Validators.minLength(10)]],
     role: ['', [Validators.required]],
-    website: ['', [Validators.maxLength(255)]],
-    social_facebook: ['', [Validators.maxLength(255)]],
-    social_twitter: ['', [Validators.maxLength(255)]],
-    social_instagram: ['', [Validators.maxLength(255)]],
-    social_linkedin: ['', [Validators.maxLength(255)]],
   })
 
   onSubmit(): void {
@@ -53,5 +46,30 @@ export class AdminDialogComponent {
       this.toastr.error('Preencha todos os campos necessários');
       return;
     }
+    this.newsService.createAdmin(this.adminForm.value).subscribe({
+      next: () => {
+        this.dialogRef.close();
+        this.toastr.success('Admin criado com sucesso');
+      },
+      error: () => {
+        this.toastr.error('Erro ao criar admin');
+      },
+    });
+  }
+  get name() {
+    return this.adminForm.get('name');
+  }
+  get email() {
+    return this.adminForm.get('email');
+  }
+  get password() {
+    return this.adminForm.get('password');
+  }
+  get password_confirmation() {
+    return this.adminForm.get('password_confirmation');
+  }
+  get role() {
+    return this.adminForm.get('role');
   }
 }
+    

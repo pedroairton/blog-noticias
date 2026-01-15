@@ -58,4 +58,7 @@ export class TagDialogComponent {
       });
     }
   }
+  get name() {
+    return this.tagForm.get('name');
+  }
 }

@@ -5,6 +5,9 @@
       <mat-label>Nome</mat-label>
       <input matInput formControlName="name" />
       <mat-icon matSuffix>title</mat-icon>
+      @if (name?.invalid && name?.touched) {
+        <mat-error>{{ name?.errors?.['required'] ? 'Nome é obrigatório' : 'Nome inválido' }}</mat-error>
+      }
     </mat-form-field>
     <button mat-button color="primary" type="submit" [disabled]="tagForm.invalid">Salvar</button>
   </form>

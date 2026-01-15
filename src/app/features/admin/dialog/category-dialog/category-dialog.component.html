@@ -5,11 +5,22 @@
       <mat-label>Nome</mat-label>
       <input matInput formControlName="name" />
       <mat-icon matSuffix>title</mat-icon>
+      @if (name?.invalid && name?.touched) {
+        <mat-error>{{ name?.errors?.['required'] ? 'Nome é obrigatório' : 'Nome inválido' }}</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Descrição</mat-label>
       <input matInput formControlName="description" />
       <mat-icon matSuffix>description</mat-icon>
+      @if (description?.invalid && description?.touched) {
+        @if (description?.errors?.['maxlength']) {
+          <mat-error>A descrição deve ter no máximo 255 caracteres</mat-error>
+        }
+        @if (description?.errors?.['minlength']) {
+          <mat-error>A descrição deve ter no mínimo 8 caracteres</mat-error>
+        }
+      }
     </mat-form-field>
     <button mat-button color="primary" type="submit" [disabled]="categoryForm.invalid">Salvar</button>
   </form>

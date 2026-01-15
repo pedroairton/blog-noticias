@@ -99,6 +99,14 @@ export const routes: Routes = [
           ),
           canActivate: [adminGuard]
       },
+      {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./features/admin/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+          canActivate: [authGuard]
+      }
     ],
   },
   {
