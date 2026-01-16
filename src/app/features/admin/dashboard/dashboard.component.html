@@ -1,1 +1,11 @@
-<p>dashboard</p>
+<section class="admin dashboard">
+    <h1>Dashboard</h1>
+    <div class="itens-dashboard">
+        @if (this.isSuperAdmin$) {
+            <div class="item">
+                <h3>Total de Notícias</h3>
+                <p>{{ this.dashboard.total_news }}</p>
+            </div>
+        }
+    </div>
+</section>

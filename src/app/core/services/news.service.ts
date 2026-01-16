@@ -36,6 +36,10 @@ export class NewsService {
     return this.api.post(`news/${id}/increment-views`)
   }
 
+  getDashboardStats(): Observable<any> {
+    return this.api.get('dashboard/stats')
+  }
+
   // admin
   getAdminNews(params?: any): Observable<{data: News[], meta: any}> {
     return this.api.get('admin/news', params)

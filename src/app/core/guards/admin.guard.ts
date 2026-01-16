@@ -12,15 +12,17 @@ export const adminGuard: CanActivateFn = (route, state) => {
   if(authService.isSuperAdmin().subscribe({
     next: (response) => {
       if(response) {
-        return true;
+        console.log('superadmin'); 
       }
-      return false;
+      console.log('not superadmin');
     },
     error: (error) => {
       console.error(error);
       return false;
     }
-  }))
+  })) {
+    return true;
+  }
   
   router.navigate(['/admin/dashboard'])
   return false;
