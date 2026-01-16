@@ -29,6 +29,7 @@
       @if (password?.invalid && password?.touched) {
       <mat-error>
         @if (password?.errors?.['required']) { A senha é obrigatória }
+        @else if(password?.errors?.['minlength']) { A senha deve ter no mínimo 8 caracteres }
       </mat-error>
       }
     </mat-form-field>

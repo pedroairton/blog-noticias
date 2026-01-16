@@ -7,13 +7,13 @@
     </button>
   </div>
   @if (isLoading) {
-    <mat-spinner diameter="50"></mat-spinner>
-  }
-  @else if (!isLoading && tags.length > 0) {
+  <mat-spinner diameter="50"></mat-spinner>
+  } @else if (!isLoading && tags.length > 0) {
   <div class="lista-tags">
     @for (tag of tags; track $index) {
     <div class="tag">
       <h2>{{ tag.name }}</h2>
+      @if (isSuperAdmin$) {
       <div class="buttons">
         <button mat-button class="btn-edit" (click)="editTag(tag)">
           <mat-icon>edit</mat-icon>
@@ -24,11 +24,11 @@
           Excluir
         </button>
       </div>
+      }
     </div>
     }
   </div>
-  }
-  @else {
-    <p>Nenhuma tag encontrada.</p>
+  } @else {
+  <p>Nenhuma tag encontrada.</p>
   }
 </section>

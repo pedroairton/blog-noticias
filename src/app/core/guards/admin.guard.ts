@@ -7,11 +7,21 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
 
   // temporariamente
-  return true
+  // return true
 
-  if(authService.isSuperAdmin()) {
-    return true;
-  }
+  if(authService.isSuperAdmin().subscribe({
+    next: (response) => {
+      if(response) {
+        return true;
+      }
+      return false;
+    },
+    error: (error) => {
+      console.error(error);
+      return false;
+    }
+  }))
+  
   router.navigate(['/admin/dashboard'])
   return false;
 };

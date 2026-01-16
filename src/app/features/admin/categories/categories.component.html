@@ -15,7 +15,8 @@
     <div class="categoria">
       <h2>{{ category.name }}</h2>
       <p>{{ category.description || 'Sem descrição informada' }}</p>
-      <div class="buttons">
+      @if (isSuperAdmin$) {
+        <div class="buttons">
         <button mat-button class="btn-edit" (click)="editCategory(category)">
           <mat-icon>edit</mat-icon>
           Editar
@@ -25,6 +26,7 @@
           Excluir
         </button>
       </div>
+      }
     </div>
     }
   </div>

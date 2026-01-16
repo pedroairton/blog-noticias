@@ -2,7 +2,7 @@ import { Injectable, PLATFORM_ID } from '@angular/core';
 import { ApiService } from './api.service';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Admin, LoginRequest, LoginResponse } from '../models/admin.model';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -58,8 +58,10 @@ export class AuthService {
     return !!this.tokenSubject.value
   }
 
-  isSuperAdmin(): boolean {
-    return this.currentAdminSubject.value?.role === 'superadmin'
+  isSuperAdmin(): Observable<boolean> {
+    return this.api.get('auth/me').pipe(
+      map((admin: Admin | unknown) => (admin as Admin)?.role === 'superadmin' || false)
+    )
   }
 
   isAuthor(): boolean {
@@ -105,12 +107,15 @@ export class AuthService {
   changePassword(passwords: { current_password: string, new_password: string, new_password_confirmation: string }): Observable<any> {
     return this.api.put('profile/password', passwords)
   }
-  updateProfile(formData: FormData) {
-    console.log('updateProfile');
-    
+  updateProfile(formData: FormData) {    
+    // Para debug correto do FormData
     for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+      if (value instanceof File) {
+        console.log(`${key}: File - ${value.name}, ${value.type}, ${value.size} bytes`);
+      } else {
+        console.log(`${key}: ${value}`);
       }
+    }
     return this.api.post('profile', formData)
   }
 }

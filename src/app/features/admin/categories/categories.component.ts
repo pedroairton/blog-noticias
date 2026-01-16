@@ -7,17 +7,32 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryDialogComponent } from '../dialog/category-dialog/category-dialog.component';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-categories',
   imports: [MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.scss'
+  styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent {
   protected newsService = inject(NewsService);
+  protected authService = inject(AuthService);
   private toastr = inject(ToastrService);
   isLoading = false;
+  isSuperAdmin$ = false;
+
+  checkSuperAdmin(){
+    this.authService.isSuperAdmin().subscribe({
+    next: (response: any) => {
+      console.log(response);
+      this.isSuperAdmin$ = response;
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
+  }
 
   categories: Category[] = [];
 
@@ -26,10 +41,10 @@ export class CategoriesComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
       width: '500px',
-      data: {}
+      data: {},
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.loadCategories();
       }
     });
@@ -49,19 +64,19 @@ export class CategoriesComponent {
       },
     });
   }
-  editCategory(category: Category){
+  editCategory(category: Category) {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
       width: '500px',
-      data: category
+      data: category,
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.loadCategories();
       }
     });
   }
-  deleteCategory(category: Category){
-    if(!confirm('Deseja excluir esta categoria?')) return;
+  deleteCategory(category: Category) {
+    if (!confirm('Deseja excluir esta categoria?')) return;
     this.newsService.deleteCategory(category.id).subscribe({
       next: () => {
         this.loadCategories();
@@ -69,11 +84,12 @@ export class CategoriesComponent {
       },
       error: () => {
         this.toastr.error('Erro ao excluir categoria');
-      }
+      },
     });
   }
 
   ngOnInit(): void {
     this.loadCategories();
+    this.checkSuperAdmin();
   }
 }

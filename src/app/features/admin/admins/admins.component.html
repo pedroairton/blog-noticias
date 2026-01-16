@@ -96,7 +96,7 @@
     @if (admins.authors.length > 0) {
     <div class="admins">
       @for (author of admins.authors; track $index) {
-      <div class="admin">
+      <div class="admin" [ngClass]="{ 'admin-disabled': !author.status }">
         <div class="img">
           <img src="{{ author.avatar_url }}" alt="{{ author.name }}" />
         </div>
@@ -161,18 +161,22 @@
               </svg>
             </a>
           </div>
-          <small><i>{{ author.bio }}</i></small>
+          <small
+            ><i>{{ author.bio }}</i></small
+          >
         </div>
+        @if (isSuperAdmin$) {
         <div class="buttons">
-        <button (click)="editAdmin(author)" mat-button class="btn-edit">
-          <mat-icon>edit</mat-icon>
-          Editar
-        </button>
-        <button (click)="deleteAdmin(author)" mat-button class="btn-delete">
-          <mat-icon>delete</mat-icon>
-          Excluir
-        </button>
-      </div>
+          <button (click)="toggleStatus(author.id)" mat-button class="btn-edit">
+            <mat-icon>edit</mat-icon>
+            {{ author.status ? "Desativar" : "Ativar" }}
+          </button>
+          <button (click)="deleteAdmin(author)" mat-button class="btn-delete">
+            <mat-icon>delete</mat-icon>
+            Excluir
+          </button>
+        </div>
+        }
       </div>
       }
     </div>

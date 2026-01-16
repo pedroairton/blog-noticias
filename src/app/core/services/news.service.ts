@@ -170,4 +170,7 @@ export class NewsService {
   deleteAdmin(id: number): Observable<any> {
     return this.api.delete(`admin/admins/${id}`)
   }
+  toggleStatus(id: number): Observable<any> {
+    return this.api.patch(`admin/admins/${id}/toggle-status`, {})
+  }
 }

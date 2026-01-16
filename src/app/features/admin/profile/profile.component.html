@@ -1,6 +1,6 @@
 <section class="admin profile">
   <div class="topo">
-    <h1>Perfil</h1>
+    <h1>Seu Perfil</h1>
     @if (admin) {
     <button mat-button class="btn-edit" (click)="editUser()">
       <mat-icon>edit</mat-icon>
@@ -9,7 +9,7 @@
     }
   </div>
   @if (isLoading) {
-    <mat-spinner diameter="50"></mat-spinner>
+  <mat-spinner diameter="50"></mat-spinner>
   } @else if (admin) {
   <div class="perfil">
     <div class="topo-perfil">
@@ -22,12 +22,13 @@
         <span>{{
           admin.role == "superadmin" ? "Super Administrador" : "Autor"
         }}</span>
+        <button (click)="changePasswordDialog()" mat-button>
+          <mat-icon>lock</mat-icon>
+          Alterar Senha
+        </button>
       </div>
     </div>
     <div class="conteudo-admin">
-      <button (click)="changePasswordDialog()" mat-button>
-        <mat-icon>lock</mat-icon>
-        Alterar Senha</button>
       <p class="bio">
         <i>{{ admin.bio }}</i>
       </p>

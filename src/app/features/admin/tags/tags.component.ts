@@ -7,18 +7,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TagDialogComponent } from '../dialog/tag-dialog/tag-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-tags',
   imports: [MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './tags.component.html',
-  styleUrl: './tags.component.scss'
+  styleUrl: './tags.component.scss',
 })
 export class TagsComponent {
-protected newsService = inject(NewsService);
+  protected newsService = inject(NewsService);
+  protected authService = inject(AuthService);
   private toastr = inject(ToastrService);
   isLoading = false;
+  isSuperAdmin$ = false;
 
   tags: Tag[] = [];
 
@@ -42,11 +44,11 @@ protected newsService = inject(NewsService);
   editTag(tag: Tag) {
     this.dialog.open(TagDialogComponent, {
       width: '500px',
-      data: tag
+      data: tag,
     });
   }
   deleteTag(tag: Tag) {
-    if(!confirm('Deseja excluir esta tag?')) return;
+    if (!confirm('Deseja excluir esta tag?')) return;
     this.newsService.deleteTag(tag.id).subscribe({
       next: () => {
         this.loadTags();
@@ -54,18 +56,30 @@ protected newsService = inject(NewsService);
       },
       error: () => {
         this.toastr.error('Erro ao excluir tag');
-      }
+      },
     });
   }
-      
+
   openDialog() {
     this.dialog.open(TagDialogComponent, {
       width: '500px',
-      data: {}
+      data: {},
     });
   }
 
   ngOnInit(): void {
     this.loadTags();
+    this.checkSuperAdmin();
+  }
+
+  checkSuperAdmin() {
+    this.authService.isSuperAdmin().subscribe({
+      next: (response: any) => {
+        this.isSuperAdmin$ = response;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 }

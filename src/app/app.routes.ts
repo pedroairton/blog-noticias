@@ -81,7 +81,7 @@ export const routes: Routes = [
           import('./features/admin/categories/categories.component').then(
             (m) => m.CategoriesComponent
           ),
-          canActivate: [adminGuard]
+          canActivate: [authGuard]
       },
       {
         path: 'tags',
@@ -89,7 +89,7 @@ export const routes: Routes = [
           import('./features/admin/tags/tags.component').then(
             (m) => m.TagsComponent
           ),
-          canActivate: [adminGuard]
+          canActivate: [authGuard]
       },
       {
         path: 'admins',

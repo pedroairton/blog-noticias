@@ -15,6 +15,7 @@ export interface Admin {
   created_at: string;
   updated_at: string;
   published_news_count?: number;
+  status?: boolean;
 }
 
 export interface LoginRequest {
