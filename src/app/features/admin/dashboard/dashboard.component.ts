@@ -33,14 +33,18 @@ export class DashboardComponent {
   private newsService = inject(NewsService)
   private authService = inject(AuthService)
   private toastr = inject(ToastrService)
-  public dashboard: DashboardItensSuperAdmin | DashboardItensAutor = {} as DashboardItensSuperAdmin | DashboardItensAutor
+  dashboardSuperAdmin?: DashboardItensSuperAdmin;
+  dashboardAutor?: DashboardItensAutor; 
 
   ngOnInit(){
     this.checkSuperAdmin()
     this.newsService.getDashboardStats().subscribe({
       next: (response) => {
-        this.dashboard = response
-
+        if (this.isSuperAdmin$) {
+          this.dashboardSuperAdmin = response as DashboardItensSuperAdmin;
+        } else {
+          this.dashboardAutor = response as DashboardItensAutor;
+        }
       },
       error: (error) => {
         console.error(error)
