@@ -170,7 +170,7 @@
         {{ isEditMode ? "Atualizar" : "Criar" }}
       </button>
 
-      @if (authService.isSuperAdmin()) {
+      @if (isSuperAdmin$) {
       <button class="btn-publish" mat-raised-button color="accent" type="button" (click)="publish()"
         [disabled]="isLoading || newsForm.invalid">
         <mat-icon>publish</mat-icon>

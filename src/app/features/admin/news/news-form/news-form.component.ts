@@ -83,6 +83,8 @@ export class NewsFormComponent {
 
   mainImageFile: File | null = null;
 
+  isSuperAdmin$ = false;
+
   quillConfig = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
@@ -109,6 +111,7 @@ export class NewsFormComponent {
     this.loadCategories();
     this.loadTags();
     this.checkEditMode();
+    this.checkSuperAdmin();
   }
 
   createForm(): FormGroup {
@@ -132,6 +135,17 @@ export class NewsFormComponent {
       this.newsId = +id;
       this.loadNewsData(this.newsId);
     }
+  }
+  
+  checkSuperAdmin(){
+    this.authService.isSuperAdmin().subscribe({
+      next: (response: any) => {
+        this.isSuperAdmin$ = response;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   loadCategories(): void {

@@ -1,16 +1,76 @@
 <section class="admin dashboard">
-    <h1>Dashboard</h1>
-    <div class="itens-dashboard">
-        @if (dashboardSuperAdmin) {
-            <div class="item">
-                <h3>Total de Notícias</h3>
-                <p>{{ this.dashboardSuperAdmin.total_news }}</p>
-            </div>
-        } @else if(dashboardAutor) {
-            <div class="item">
-                <h3>Meu total de Notícias</h3>
-                <p>{{ this.dashboardAutor.my_total_news }}</p>
-            </div>
-        }
-    </div>
+  <h1>Dashboard</h1>
+  <div class="itens-dashboard">
+    @if (dashboardSuperAdmin) {
+      <div class="item">
+        <h3>Total de Notícias</h3>
+        <p>{{ this.dashboardSuperAdmin.total_news }}</p>
+      </div>
+      <div class="item">
+        <h3>Notícias Publicadas</h3>
+        <p>{{ this.dashboardSuperAdmin.published_news }}</p>
+      </div>
+      <div class="item">
+        <h3>Notícias em Rascunho</h3>
+        <p>{{ this.dashboardSuperAdmin.draft_news }}</p>
+      </div>
+      <div class="item">
+        <h3>Total de Autores</h3>
+        <p>{{ this.dashboardSuperAdmin.total_authors }}</p>
+      </div>
+      <div class="item">
+        <h3>Total de Categorias</h3>
+        <p>{{ this.dashboardSuperAdmin.total_categories }}</p>
+      </div>
+      <div class="item">
+        <h3>Total de Tags</h3>
+        <p>{{ this.dashboardSuperAdmin.total_tags }}</p>
+      </div>
+      <div class="item">
+        <h3>Total de Visualizações</h3>
+        <p>{{ this.dashboardSuperAdmin.total_views }}</p>
+      </div>
+      <div class="item">
+        <h3>Notícias Recentes</h3>
+        <div class="news">
+          @if (this.dashboardSuperAdmin.recent_news.length > 0) {
+            @for (news of this.dashboardSuperAdmin.recent_news; track $index) {
+              <a href="">{{ news.title }}</a>
+            }
+          } @else {
+            <p>Nenhuma notícia recente</p>
+          }
+        </div>
+      </div>
+    } @else if (dashboardAutor) {
+      <div class="item">
+        <h3>Meu total de Notícias</h3>
+        <p>{{ this.dashboardAutor.my_total_news }}</p>
+      </div>
+      <div class="item">
+        <h3>Notícias Publicadas</h3>
+        <p>{{ this.dashboardAutor.my_published_news }}</p>
+      </div>
+      <div class="item">
+        <h3>Notícias em Rascunho</h3>
+        <p>{{ this.dashboardAutor.my_draft_news }}</p>
+      </div>
+      <div class="item">
+        <h3>Total de Visualizações</h3>
+        <p>{{ this.dashboardAutor.my_total_views }}</p>
+      </div>
+      <div class="item">
+        <h3>Notícias Recentes</h3>
+        <div class="news">
+          @if (this.dashboardAutor.recent_my_news.length > 0) {
+            @for (news of this.dashboardAutor.recent_my_news; track $index) {
+              <a href="">{{ news.title }}</a>
+            }
+          } @else {
+            <p>Nenhuma notícia recente</p>
+          }
+        </div>
+      </div>
+    }
+  </div>
 </section>

@@ -62,6 +62,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'noticias/rascunhos',
+        loadComponent: () =>
+          import('./features/admin/news/news-drafts/news-drafts.component').then(
+            (m) => m.NewsDraftsComponent
+          ),
+      },
+      {
         path: 'noticias/nova',
         loadComponent: () =>
           import('./features/admin/news/news-form/news-form.component').then(

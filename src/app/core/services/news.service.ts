@@ -45,6 +45,10 @@ export class NewsService {
     return this.api.get('admin/news', params)
   }
 
+  getAdminNewsDrafts(params?: any): Observable<{data: News[], meta: any}> {
+    return this.api.get('admin/news/drafts', params)
+  }
+
   getNewsById(id: number): Observable<News> {
     return this.api.get(`admin/news/${id}`, {
       include: 'category,author,tags,gallery'

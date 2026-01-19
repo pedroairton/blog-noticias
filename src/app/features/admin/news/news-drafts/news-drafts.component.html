@@ -1,0 +1,62 @@
+<section class="admin news-list">
+  <div class="topo">
+    <h1>Lista de Rascunhos</h1>
+    <a href="admin/noticias/nova">
+      <button mat-button class="btn-add">
+        <mat-icon>add</mat-icon>
+        Adicionar Notícia
+      </button>
+    </a>
+  </div>
+  @if (isLoading) {
+    <mat-spinner diameter="50"></mat-spinner>
+  } @else if (!isLoading && news.length > 0) {
+    <div class="noticias">
+      @for (item of news; track $index) {
+        <div class="noticia">
+          <div class="img-noticia">
+            <img [src]="`${storageUrl}/${item.main_image}`" alt="" />
+          </div>
+          <div class="infos-noticia">
+            @if (item.is_published) {
+              <small class="status published" (click)="unpublishNews(item.id)">
+                <mat-icon>check_circle_outline</mat-icon>
+                <span>Publicado</span>
+              </small>
+            } @else {
+              <small class="status draft" (click)="publishNews(item.id)">
+                <mat-icon>schedule</mat-icon>
+                <span>Rascunho</span>
+              </small>
+            }
+            <span class="categoria">{{ item.category?.name }}</span>
+            <small
+              ><i>{{ item.author?.name }}</i></small
+            >
+            <h2>{{ item.title }}</h2>
+            <div class="excerpt" [innerHTML]="sanitizeHtml(item.excerpt)"></div>
+          </div>
+          <div class="buttons">
+            <a href="admin/noticias/editar/{{ item.id }}">
+              <button class="btn-edit" mat-button color="primary">
+                <mat-icon>edit</mat-icon>
+                Editar
+              </button>
+            </a>
+            <button
+              (click)="deleteNews(item.id)"
+              class="btn-delete"
+              mat-button
+              color="warn"
+            >
+              <mat-icon>delete</mat-icon>
+              Excluir
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <p>Nenhuma notícia encontrada</p>
+  }
+</section>
