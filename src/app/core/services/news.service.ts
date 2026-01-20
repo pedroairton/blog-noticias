@@ -24,6 +24,10 @@ export class NewsService {
     return this.api.get('news/featured')
   }
 
+  getRecentNews(): Observable<News[]> {
+    return this.api.get('news/recent')
+  }
+
   getNewsByCategory(slug: string, params?: any): Observable<any> {
     return this.api.get(`news/category/${slug}`, params)
   }
