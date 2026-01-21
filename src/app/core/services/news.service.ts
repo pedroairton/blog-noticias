@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { GalleryImage, GalleryUploadData, News } from '../models/news.model';
+import { GalleryImage, News } from '../models/news.model';
 import { Category } from '../models/category.model';
 import { Tag } from '../models/tag.model';
 
@@ -28,12 +28,20 @@ export class NewsService {
     return this.api.get('news/recent')
   }
 
+  getRandomCategories(): Observable<Category[]> {
+    return this.api.get('news/category/random')
+  }
+
   getNewsByCategory(slug: string, params?: any): Observable<any> {
     return this.api.get(`news/category/${slug}`, params)
   }
 
   getNewsByAuthor(slug: string, params?: any): Observable<any> {
     return this.api.get(`news/author/${slug}`, params)
+  }
+
+  getMostViewedNews(): Observable<News[]> {
+    return this.api.get('news/most-viewed')
   }
 
   incrementViews(id: string): Observable<any> {

@@ -476,14 +476,14 @@ export class NewsFormComponent {
       next: (response: any) => {
         const newsId = response.news.id;
         this.toastr.success('Notícia criada com sucesso!');
-        // this.router.navigate(['/admin/noticias']);
+        this.router.navigate(['/admin/noticias']);
         console.log(galleryImages);
         
         if(galleryImages.length > 0) {
           this.uploadGalleryImages(newsId, galleryImages, existingImageIds)
         } else {
           this.isLoading = false
-          // this.router.navigate(['/admin/noticias'])
+          this.router.navigate(['/admin/noticias'])
         }
       },
       error: (error) => {

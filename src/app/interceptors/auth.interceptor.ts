@@ -8,6 +8,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
+  if(!req.url.includes('auth') && !req.url.includes('admin')){
+    return next(req);
+  }
   const token = localStorage.getItem('auth_token')
 
   if(token){

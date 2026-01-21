@@ -1,0 +1,31 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  button {
+    transition: 0.3s;
+  }
+  .btn-cancelar {
+    background-color: #800000;
+    color: white;
+    &:hover {
+      background-color: #c20000;
+    }
+  }
+  .btn-salvar {
+    background-color: #1aa04e;
+    color: white;
+    &:hover {
+      background-color: #20b558;
+    }
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}

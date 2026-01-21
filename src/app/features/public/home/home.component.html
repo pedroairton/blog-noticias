@@ -1,282 +1,63 @@
 <section class="page-home">
   <h1>Últimas Notícias</h1>
   <div class="ultimas-noticias">
-    <a href="/noticia/titulo-da-noticia" class="noticia noticia-primaria">
-      <h2>Título da notícia</h2>
-      <p class="texto">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">Categoria | Leitura de 6 min</p>
-      <div class="img-noticia">
-        <img
-          src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-          alt=""
-        />
-      </div>
-    </a>
-    <div class="secundarias">
-      <a href="/noticia/titulo-da-noticia" class="noticia noticia-secundaria">
-        <div class="conteudo-noticia">
-          <h2>Título da notícia</h2>
-
+    @for (news of newsRecent; track $index) {
+      <a href="/noticia/{{ news.slug }}" class="noticia">
+        <div class="infos-noticia">
+          <h2>{{ news.title }}</h2>
           <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
+            {{news.subtitle}}
           </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
+          <p class="infos">{{ news.category?.name }} | Leitura de {{ news.reading_time }} min</p>
         </div>
         <div class="img-noticia">
           <img
-            src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
+            [src]="storageUrl + '/' + news.main_image"
             alt=""
           />
         </div>
       </a>
-      <a href="/noticia/titulo-da-noticia" class="noticia noticia-secundaria">
-        <div class="conteudo-noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-        </div>
-        <div class="img-noticia">
-          <img
-            src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-            alt=""
-          />
-        </div>
-      </a>
-      <a href="/noticia/titulo-da-noticia" class="noticia noticia-secundaria">
-        <div class="conteudo-noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-        </div>
-        <div class="img-noticia">
-          <img
-            src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-            alt=""
-          />
-        </div>
-      </a>
-    </div>
+    }
   </div>
   <div class="categorias">
     <h1>Categorias</h1>
-    <div class="categoria">
-      <div class="titulo-categoria">
-        <h2>Política</h2>
-        <a href="/noticia/titulo-da-noticia">
-          Ver mais
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-caret-right-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
-            />
-          </svg>
-        </a>
+    @for (category of categories; track $index) {
+      <div class="categoria">
+        <div class="titulo-categoria">
+          <h2>{{ category.name }}</h2>
+          <a href="/categoria/{{ category.slug }}">
+            Ver mais
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-right-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+              />
+            </svg>
+          </a>
+        </div>
+        <div class="noticias">
+          @for (news of category.news; track $index) {
+            <a href="/noticia/{{ news.slug }}" class="noticia">
+              <h2>{{ news.title }}</h2>
+              <p class="texto">
+                {{ news.subtitle }}
+              </p>
+              <p class="infos">{{ category.name }} | Leitura de {{ news.reading_time }} min</p>
+              <div class="img-noticia">
+                <img [src]="storageUrl + '/' + news.main_image" alt="" />
+              </div>
+            </a>
+          }
+        </div>
+        <hr />
       </div>
-      <div class="noticias">
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-      </div>
-      <hr />
-    </div>
-    <div class="categoria">
-      <div class="titulo-categoria">
-        <h2>Tecnologia</h2>
-        <a href="/noticia/titulo-da-noticia"
-          >Ver mais
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-caret-right-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div class="noticias">
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-      </div>
-      <hr />
-    </div>
-    <div class="categoria">
-      <div class="titulo-categoria">
-        <h2>Esportes</h2>
-        <a href="/noticia/titulo-da-noticia"
-          >Ver mais
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-caret-right-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div class="noticias">
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-        <a href="/noticia/titulo-da-noticia" class="noticia">
-          <h2>Título da notícia</h2>
-          <p class="texto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-            laboriosam quisquam accusamus maiores. Maiores accusamus esse rem
-            nisi id!
-          </p>
-          <p class="infos">Categoria | Leitura de 6 min</p>
-          <div class="img-noticia">
-            <img
-              src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-              alt=""
-            />
-          </div>
-        </a>
-      </div>
-      <hr />
-    </div>
+    }
   </div>
   <div class="mais-lidas">
     <h1>Mais lidas</h1>
