@@ -17,7 +17,7 @@ export class NewsService {
   }
 
   getNewsBySlug(slug: string): Observable<News> {
-    return this.api.get(`news/${slug}`)
+    return this.api.get(`news/slug/${slug}`)
   }
 
   getFeaturedNews(): Observable<News[]> {

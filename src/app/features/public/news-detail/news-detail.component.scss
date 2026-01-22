@@ -109,7 +109,11 @@
     }
   }
   .corpo-noticia{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     p{
+      width: 100% !important;
       font-size: 1.25rem;
       font-weight: 500;
       color: #202020;
