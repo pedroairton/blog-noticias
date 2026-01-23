@@ -4,6 +4,7 @@ import { News } from '../../../core/models/news.model';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { formatDateToBR } from '../../../core/utils/functions';
 
 @Component({
   selector: 'app-news-detail',
@@ -21,7 +22,6 @@ export class NewsDetailComponent {
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer){
     this.slug = this.route.snapshot.paramMap.get('slug') as string;
-    console.log(this.slug)
     this.newsService.getNewsBySlug(this.slug).subscribe({
       next: (news) => {
         console.log(news)
@@ -30,7 +30,7 @@ export class NewsDetailComponent {
         console.error(error);
       }
     })
-    this.newsService.getNews().subscribe({
+    this.newsService.getNews({limit: 6}).subscribe({
       next: (news) => {
         console.log(news.data)
         this.moreNews = news.data;
@@ -54,16 +54,7 @@ export class NewsDetailComponent {
         .trim();                  // Remove leading/trailing spaces
   }
   formatDateToBR(dateString: string | undefined): string {
-    if(dateString){
-      const date = new Date(dateString);
-  
-      const day = String(date.getUTCDate()).padStart(2, "0");
-      const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-      const year = date.getUTCFullYear();
-    
-      return `${day}/${month}/${year}`;
-    }
-    return '';
+    return formatDateToBR(dateString);
   }
   
 }
