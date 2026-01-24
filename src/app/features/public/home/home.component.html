@@ -5,16 +5,15 @@
       <a href="/noticia/{{ news.slug }}" class="noticia">
         <div class="infos-noticia">
           <h2>{{ news.title }}</h2>
-          <p class="texto">
-            {{news.subtitle}}
+          <p class="desc-noticia">
+            {{ news.subtitle }}
           </p>
-          <p class="infos">{{ news.category?.name }} | Leitura de {{ news.reading_time }} min</p>
+          <p class="infos">
+            {{ news.category?.name }} | Leitura de {{ news.reading_time }} min
+          </p>
         </div>
         <div class="img-noticia">
-          <img
-            [src]="storageUrl + '/' + news.main_image"
-            alt=""
-          />
+          <img [src]="storageUrl + '/' + news.main_image" alt="" />
         </div>
       </a>
     }
@@ -45,10 +44,12 @@
           @for (news of category.news; track $index) {
             <a href="/noticia/{{ news.slug }}" class="noticia">
               <h2>{{ news.title }}</h2>
-              <p class="texto">
+              <p class="desc-noticia">
                 {{ news.subtitle }}
               </p>
-              <p class="infos">{{ category.name }} | Leitura de {{ news.reading_time }} min</p>
+              <p class="infos">
+                {{ category.name }} | Leitura de {{ news.reading_time }} min
+              </p>
               <div class="img-noticia">
                 <img [src]="storageUrl + '/' + news.main_image" alt="" />
               </div>
@@ -62,51 +63,20 @@
   <div class="mais-lidas">
     <h1>Mais lidas</h1>
     <div class="noticias">
-      <a href="/noticia/titulo-da-noticia" class="noticia">
-        <h2>Título da notícia</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-          laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-          id!
-        </p>
-        <p class="infos">Categoria | Leitura de 6 min</p>
-        <div class="img-noticia">
-          <img
-            src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-            alt=""
-          />
-        </div>
-      </a>
-      <a href="/noticia/titulo-da-noticia" class="noticia">
-        <h2>Título da notícia</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-          laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-          id!
-        </p>
-        <p class="infos">Categoria | Leitura de 6 min</p>
-        <div class="img-noticia">
-          <img
-            src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-            alt=""
-          />
-        </div>
-      </a>
-      <a href="/noticia/titulo-da-noticia" class="noticia">
-        <h2>Título da notícia</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-          laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-          id!
-        </p>
-        <p class="infos">Categoria | Leitura de 6 min</p>
-        <div class="img-noticia">
-          <img
-            src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg"
-            alt=""
-          />
-        </div>
-      </a>
+      @for (news of newsMostViewed; track $index) {
+        <a href="/noticia/{{ news.slug }}" class="noticia">
+          <h2>{{ news.title }}</h2>
+          <p class="desc-noticia">
+            {{ news.subtitle }}
+          </p>
+          <p class="infos">
+            {{ news.category?.name }} | Leitura de {{ news.reading_time }} min
+          </p>
+          <div class="img-noticia">
+            <img [src]="storageUrl + '/' + news.main_image" alt="" />
+          </div>
+        </a>
+      }
     </div>
   </div>
 </section>

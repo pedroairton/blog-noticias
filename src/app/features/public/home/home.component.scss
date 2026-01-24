@@ -23,18 +23,18 @@ section.page-home {
     .noticia {
       display: flex;
       gap: 5px;
-      &:first-child{
+      &:first-child {
         grid-row: 1/4;
         flex-direction: column;
-        .img-noticia{
+        .img-noticia {
           flex-grow: 1;
         }
       }
       &:not(:first-child) {
-        .infos-noticia{
+        .infos-noticia {
           flex: 2;
         }
-        .img-noticia{
+        .img-noticia {
           flex: 1;
         }
       }
@@ -48,7 +48,7 @@ section.page-home {
           }
         }
       }
-      .infos-noticia{
+      .infos-noticia {
         display: flex;
         flex-direction: column;
         gap: 5px;
@@ -138,18 +138,24 @@ section.page-home {
       .noticias {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
         .noticia {
           display: flex;
           flex-direction: column;
           gap: 5px;
+          padding: 1rem;
+          transition: 0.3s;
           h2 {
             font-weight: 600;
             flex-grow: 1;
             transition: 0.3s;
           }
+          .desc-noticia {
+            flex-grow: 1;
+          }
           &:hover {
+            background-color: #f0f0f0;
             h2 {
               color: #12244e;
             }
@@ -185,29 +191,34 @@ section.page-home {
     }
   }
   .mais-lidas {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
     .noticias {
-      display: flex;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
       .noticia {
         display: flex;
         flex-direction: column;
         gap: 5px;
+        padding: 1rem;
+        transition: 0.3s;
         h2 {
           font-weight: 600;
+          flex-grow: 1;
           transition: 0.3s;
         }
+        .desc-noticia {
+          flex-grow: 1;
+        }
         &:hover {
+          background-color: #f0f0f0;
           h2 {
             color: #12244e;
-          }
-          .img-noticia {
-            img {
-              scale: 1.05;
-            }
           }
         }
         .texto {
@@ -218,12 +229,21 @@ section.page-home {
           font-weight: 500;
           text-transform: uppercase;
         }
+        &:hover {
+          .img-noticia {
+            img {
+              scale: 1.05;
+            }
+          }
+        }
         .img-noticia {
+          aspect-ratio: 4/3;
           overflow: hidden;
           border-radius: 5px;
           img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
             transition: 0.3s;
           }
         }

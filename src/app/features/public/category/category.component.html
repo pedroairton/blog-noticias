@@ -8,8 +8,8 @@
     @for (newsItem of news; track $index) {
       <a href="/noticia/{{ newsItem.slug }}" class="noticia">
         <h2>{{ newsItem.title }}</h2>
-        <p>
-          {{ newsItem.excerpt }}
+        <p class="desc-noticia">
+          {{ newsItem.subtitle }}
         </p>
         <p class="infos">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"

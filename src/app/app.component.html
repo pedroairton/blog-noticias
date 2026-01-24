@@ -1,9 +1,9 @@
 <main>
     @if (!hidePublic) {
-        <app-header></app-header>
+        <app-header [categories]="categories"></app-header>
     }
     <router-outlet></router-outlet>
     @if (!hidePublic) {
-        <app-footer></app-footer>
+        <app-footer [categories]="categories"></app-footer>
     }
 </main>

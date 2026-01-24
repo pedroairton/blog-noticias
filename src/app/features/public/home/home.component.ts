@@ -20,7 +20,7 @@ export class HomeComponent {
   ngOnInit(){
     this.getRandomCategories()
     this.getRecentNews()
-    // this.getMostViewedNews()
+    this.getMostViewedNews()
   }
   getRandomCategories(){
     this.newsService.getRandomCategories().subscribe({

@@ -2,11 +2,9 @@
   <div class="conteudo-footer">
     <h1>Logo</h1>
     <div class="itens">
-      <a href="" class="item">Política</a>
-      <a href="" class="item">Esportes</a>
-      <a href="" class="item">Tecnologia</a>
-      <a href="" class="item">Cultura</a>
-      <a href="" class="item">Entretenimento</a>
+      @for (category of categories; track $index) {
+        <a href="categoria/{{ category.slug }}" class="item">{{ category.name }}</a>
+      }
     </div>
     <div class="redes">
       <a href="" target="_blank" rel="noopener noreferrer">

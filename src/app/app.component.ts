@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
+import { Category } from './core/models/category.model';
+import { NewsService } from './core/services/news.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +13,9 @@ import { FooterComponent } from "./shared/components/footer/footer.component";
 })
 export class AppComponent {
   title = 'blog';
-
   hidePublic: boolean = false;
+  categories: Category[] = [];
+  protected newsService = inject(NewsService)
 
   constructor(private router: Router){
     this.router.events.subscribe(e => {
@@ -22,6 +25,14 @@ export class AppComponent {
         } else {
           this.hidePublic = false;
         }
+      }
+    })
+    this.newsService.getAllCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (error) => {
+        console.error(error);
       }
     })
   }

@@ -22,11 +22,9 @@
       </a>
     </div>
     <nav>
-      <a href="/categoria/categoria" class="item">Política</a>
-      <a href="/categoria/categoria" class="item">Esportes</a>
-      <a href="/categoria/categoria" class="item">Tecnologia</a>
-      <a href="/categoria/categoria" class="item">Cultura</a>
-      <a href="/categoria/categoria" class="item">Entretenimento</a>
+      @for (category of categories; track $index) {
+        <a href="/categoria/{{ category.slug }}" class="item">{{ category.name }}</a>
+      }
     </nav>
   </div>
 </header>

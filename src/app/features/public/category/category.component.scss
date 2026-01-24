@@ -1,54 +1,60 @@
-.page-categoria{
-    align-items: center;
-    .titulo-categoria{
-        font-size: 3rem;
-        color: #2c53af;
-    }
-    .noticias {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-      gap: 2rem;
-      .noticia {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
+.page-categoria {
+  align-items: center;
+  .titulo-categoria {
+    font-size: 3rem;
+    color: #2c53af;
+  }
+  .noticias {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    .noticia {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 1rem;
+      transition: 0.3s;
+      h2 {
+        font-weight: 600;
+        flex-grow: 1;
+        transition: 0.3s;
+      }
+      .desc-noticia {
+        flex-grow: 1;
+      }
+      &:hover {
+        background-color: #f0f0f0;
         h2 {
-          font-weight: 600;
-          flex-grow: 1;
-          transition: 0.3s;
-        }
-        &:hover {
-          h2 {
-            color: #12244e;
-          }
-        }
-        .texto {
           color: #12244e;
         }
-        .infos {
-          color: #2c53af;
-          font-weight: 500;
-          text-transform: uppercase;
-        }
-        &:hover {
-          .img-noticia {
-            img {
-              scale: 1.05;
-            }
-          }
-        }
+      }
+      .texto {
+        color: #12244e;
+      }
+      .infos {
+        color: #2c53af;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+      &:hover {
         .img-noticia {
-          aspect-ratio: 4/3;
-          overflow: hidden;
-          border-radius: 5px;
           img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.3s;
+            scale: 1.05;
           }
         }
       }
+      .img-noticia {
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        border-radius: 5px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: 0.3s;
+        }
+      }
     }
+  }
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Category } from '../../../core/models/category.model';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
+  @Input() categories: Category[] = [];
 }

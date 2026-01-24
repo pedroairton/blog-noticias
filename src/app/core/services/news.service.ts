@@ -28,6 +28,10 @@ export class NewsService {
     return this.api.get('news/recent')
   }
 
+  getAllCategories(): Observable<Category[]> {
+    return this.api.get('news/categories')
+  }
+
   getRandomCategories(): Observable<Category[]> {
     return this.api.get('news/category/random')
   }
@@ -45,7 +49,7 @@ export class NewsService {
   }
 
   incrementViews(id: string): Observable<any> {
-    return this.api.post(`news/${id}/increment-views`)
+    return this.api.post(`news/${id}/view`)
   }
 
   // admin

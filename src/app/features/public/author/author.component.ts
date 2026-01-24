@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { NewsService } from '../../../core/services/news.service';
 import { Admin } from '../../../core/models/admin.model';
 import { ActivatedRoute } from '@angular/router';
+import { formatDateToBR } from '../../../core/utils/functions';
 
 @Component({
   selector: 'app-author',
@@ -31,4 +32,7 @@ export class AuthorComponent {
       },
     });
   }
+  formatDateToBR(dateString: string | undefined): string {
+      return formatDateToBR(dateString);
+    }
 }

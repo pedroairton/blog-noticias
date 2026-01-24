@@ -1,7 +1,7 @@
 <section class="page-autor">
   @if (author) {
   <div class="autor">
-    <img class="img-autor" src="/fake.jfif" alt="" />
+    <img class="img-autor" [src]="storageUrl + '/' + author.avatar" alt="{{ author.name }}" />
     <div class="infos-autor">
       <h2 class="nome-autor">
         {{ author.name }}
@@ -46,136 +46,33 @@
       </h2>
       @if (author.bio) {
         <i class="bio">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione
-          obcaecati officiis quasi corrupti, voluptates quae illo, reiciendis
-          deleniti, recusandae eos rerum! Atque expedita pariatur quas harum
-          aliquam, at cum odit. Quasi obcaecati commodi a, suscipit cupiditate
-          sint officiis quia blanditiis animi accusamus dolorum? Nemo, minus
-          beatae? Exercitationem dicta quia placeat, voluptas atque dolore debitis
-          doloribus iste tempore recusandae provident aliquam dolorum officiis
-          ipsum voluptate dolorem libero alias. Libero, dolore at alias
-          necessitatibus nesciunt a laborum cupiditate soluta! Nostrum animi at
-          mollitia ipsam rerum. Officiis illo laborum voluptatibus aut, atque
-          dolor?
+          {{ author.bio }}
         </i>
       }
     </div>
   </div>
-  <div class="noticias">
-    <a href="/noticia/titulo-da-noticia" class="noticia">
-      <h2>Título da notícia</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
-          viewBox="0 0 16 16">
-          <path
-            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        25/12/2025 | Leitura de 6 min
-      </p>
-      <div class="img-noticia">
-        <img src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg" alt="" />
-      </div>
-    </a>
-    <a href="/noticia/titulo-da-noticia" class="noticia">
-      <h2>Título da notícia</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
-          viewBox="0 0 16 16">
-          <path
-            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        25/12/2025 | Leitura de 6 min
-      </p>
-      <div class="img-noticia">
-        <img src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg" alt="" />
-      </div>
-    </a>
-    <a href="/noticia/titulo-da-noticia" class="noticia">
-      <h2>Título da notícia</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
-          viewBox="0 0 16 16">
-          <path
-            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        25/12/2025 | Leitura de 6 min
-      </p>
-      <div class="img-noticia">
-        <img src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg" alt="" />
-      </div>
-    </a>
-    <a href="/noticia/titulo-da-noticia" class="noticia">
-      <h2>Título da notícia</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
-          viewBox="0 0 16 16">
-          <path
-            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        25/12/2025 | Leitura de 6 min
-      </p>
-      <div class="img-noticia">
-        <img src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg" alt="" />
-      </div>
-    </a>
-    <a href="/noticia/titulo-da-noticia" class="noticia">
-      <h2>Título da notícia</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
-          viewBox="0 0 16 16">
-          <path
-            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        25/12/2025 | Leitura de 6 min
-      </p>
-      <div class="img-noticia">
-        <img src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg" alt="" />
-      </div>
-    </a>
-    <a href="/noticia/titulo-da-noticia" class="noticia">
-      <h2>Título da notícia</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi
-        laboriosam quisquam accusamus maiores. Maiores accusamus esse rem nisi
-        id!
-      </p>
-      <p class="infos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
-          viewBox="0 0 16 16">
-          <path
-            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        25/12/2025 | Leitura de 6 min
-      </p>
-      <div class="img-noticia">
-        <img src="https://cdn.folhape.com.br/img/c/940/620/dn_arquivo/2025/01/ponte-giratoria.jpg" alt="" />
-      </div>
-    </a>
-  </div>
+  @if (news) {
+    <div class="noticias">
+      @for (newsItem of news; track $index) {
+        <a href="/noticia/{{ newsItem.slug }}" class="noticia">
+        <h2>{{ newsItem.title }}</h2>
+        <p class="desc-noticia">
+          {{newsItem.subtitle}}
+        </p>
+        <p class="infos">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar"
+            viewBox="0 0 16 16">
+            <path
+              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+          </svg>
+          {{ formatDateToBR(newsItem.published_at) }} | Leitura de {{ newsItem.reading_time }} min
+        </p>
+        <div class="img-noticia">
+          <img [src]="storageUrl + '/' + newsItem.main_image" [alt]="newsItem.main_image_alt" />
+        </div>
+      </a>
+      }
+    </div>
+  }
   }
 </section>

@@ -26,6 +26,7 @@ export class NewsDetailComponent {
       next: (news) => {
         console.log(news)
         this.newsDetail = news;
+        this.incrementView(news.id);
       }, error: (error) => {
         console.error(error);
       }
@@ -56,5 +57,41 @@ export class NewsDetailComponent {
   formatDateToBR(dateString: string | undefined): string {
     return formatDateToBR(dateString);
   }
-  
+  incrementView(id: number){
+    this.newsService.incrementViews(id.toString()).subscribe({
+      next: (response) => {
+        console.log(response);
+      }, error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+  copyUrl() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('URL copiada para a área de transferência!');
+    }).catch(err => {
+      console.error('Erro ao copiar URL: ', err);
+    });
+  }
+  shareUrlWhatsapp() {
+    const url = window.location.href;
+    window.open(`https://wa.me/?text=${url}`, '_blank');
+  }
+  shareUrlTwitter() {
+    const url = window.location.href;
+    window.open(`https://x.com/intent/tweet?url=${url}`, '_blank');
+  }
+  shareUrlFacebook() {
+    const url = window.location.href;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+  }
+  shareUrlTelegram() {
+    const url = window.location.href;
+    window.open(`https://t.me/share/url?url=${url}`, '_blank');
+  }
+  // shareUrlLinkedIn() {
+  //   const url = window.location.href;
+  //   window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}`, '_blank');
+  // }
 }
