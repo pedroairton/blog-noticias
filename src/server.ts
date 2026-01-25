@@ -1,12 +1,15 @@
 import {
   AngularNodeAppEngine,
+  CommonEngine,
   createNodeRequestHandler,
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
-import { dirname, resolve } from 'node:path';
+import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import bootstrap from './main.server';
+import { APP_BASE_HREF } from '@angular/common';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -64,3 +67,43 @@ if (isMainModule(import.meta.url)) {
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
 export const reqHandler = createNodeRequestHandler(app);
+
+export default async function handler(req: any, res: any) {
+  const server = express();
+  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+  const browserDistFolder = resolve(serverDistFolder, '../browser');
+  const indexHtml = join(serverDistFolder, 'index.server.html');
+
+  const commonEngine = new CommonEngine();
+
+  server.set('view engine', 'html');
+  server.set('views', browserDistFolder);
+
+  // Serve arquivos estáticos
+  server.get('*.*', express.static(browserDistFolder, { maxAge: '1y' }));
+
+  // Todas as rotas regulares usam o Angular engine
+  server.get('*', (req, res, next) => {
+    const { protocol, originalUrl, baseUrl, headers } = req;
+
+    // Verifica se é uma rota que deve ser dinâmica
+    const isDynamicRoute = 
+      originalUrl.startsWith('/noticia/') ||
+      originalUrl.startsWith('/categoria/') ||
+      originalUrl.startsWith('/autor/') ||
+      originalUrl.startsWith('/noticias/editar');
+
+    commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: indexHtml,
+        url: `${protocol}://${headers.host}${originalUrl}`,
+        publicPath: browserDistFolder,
+        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+      })
+      .then((html: string) => res.send(html))
+      .catch((err: any) => next(err));
+  });
+
+  return server(req, res);
+}
