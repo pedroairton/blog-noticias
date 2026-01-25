@@ -7,43 +7,43 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./features/public/home/home.component').then(
-        (m) => m.HomeComponent
+        (m) => m.HomeComponent,
       ),
   },
   {
     path: 'noticia/:slug',
     loadComponent: () =>
       import('./features/public/news-detail/news-detail.component').then(
-        (m) => m.NewsDetailComponent
+        (m) => m.NewsDetailComponent,
       ),
   },
   {
     path: 'categoria/:slug',
     loadComponent: () =>
       import('./features/public/category/category.component').then(
-        (m) => m.CategoryComponent
+        (m) => m.CategoryComponent,
       ),
   },
   {
     path: 'autor/:slug',
     loadComponent: () =>
       import('./features/public/author/author.component').then(
-        (m) => m.AuthorComponent
+        (m) => m.AuthorComponent,
       ),
   },
   {
     path: 'login',
     loadComponent: () =>
       import('./features/public/auth/login/login.component').then(
-        (m) => m.LoginComponent
+        (m) => m.LoginComponent,
       ),
   },
   {
     path: 'admin',
     loadComponent: () =>
-      import(
-        './features/admin/layout/admin-layout/admin-layout.component'
-      ).then((m) => m.AdminLayoutComponent),
+      import('./features/admin/layout/admin-layout/admin-layout.component').then(
+        (m) => m.AdminLayoutComponent,
+      ),
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -51,76 +51,76 @@ export const routes: Routes = [
         path: 'dashboard',
         loadComponent: () =>
           import('./features/admin/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
+            (m) => m.DashboardComponent,
           ),
       },
       {
         path: 'noticias',
         loadComponent: () =>
           import('./features/admin/news/news-list/news-list.component').then(
-            (m) => m.NewsListComponent
+            (m) => m.NewsListComponent,
           ),
       },
       {
         path: 'noticias/rascunhos',
         loadComponent: () =>
           import('./features/admin/news/news-drafts/news-drafts.component').then(
-            (m) => m.NewsDraftsComponent
+            (m) => m.NewsDraftsComponent,
           ),
       },
       {
         path: 'noticias/nova',
         loadComponent: () =>
           import('./features/admin/news/news-form/news-form.component').then(
-            (m) => m.NewsFormComponent
+            (m) => m.NewsFormComponent,
           ),
       },
       {
         path: 'noticias/editar/:id',
         loadComponent: () =>
           import('./features/admin/news/news-form/news-form.component').then(
-            (m) => m.NewsFormComponent
+            (m) => m.NewsFormComponent,
           ),
       },
       {
         path: 'categorias',
         loadComponent: () =>
           import('./features/admin/categories/categories.component').then(
-            (m) => m.CategoriesComponent
+            (m) => m.CategoriesComponent,
           ),
-          canActivate: [authGuard]
+        canActivate: [authGuard],
       },
       {
         path: 'tags',
         loadComponent: () =>
           import('./features/admin/tags/tags.component').then(
-            (m) => m.TagsComponent
+            (m) => m.TagsComponent,
           ),
-          canActivate: [authGuard]
+        canActivate: [authGuard],
       },
       {
         path: 'admins',
         loadComponent: () =>
           import('./features/admin/admins/admins.component').then(
-            (m) => m.AdminsComponent
+            (m) => m.AdminsComponent,
           ),
-          canActivate: [adminGuard]
+        canActivate: [adminGuard],
       },
       {
         path: 'perfil',
         loadComponent: () =>
           import('./features/admin/profile/profile.component').then(
-            (m) => m.ProfileComponent
+            (m) => m.ProfileComponent,
           ),
-          canActivate: [authGuard]
-      }
+        canActivate: [authGuard],
+      },
     ],
   },
   {
     path: '**',
     loadComponent: () =>
       import('./shared/components/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
-      )
-  }
+        (m) => m.NotFoundComponent,
+      ),
+  },
 ];
