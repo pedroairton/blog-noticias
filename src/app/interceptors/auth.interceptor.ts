@@ -10,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const platformId = inject(PLATFORM_ID);
 
-  if (req.url.includes('/auth') && req.url.includes('/admin')) {
+  if (req.url.includes('/auth') || req.url.includes('/admin') || req.url.includes('/dashboard')) {
     if (isPlatformBrowser(platformId)) {
       const token = localStorage.getItem('auth_token');
       if (token) {
