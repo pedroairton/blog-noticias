@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.example.com',
-    storageUrl: 'https://storage.example.com'
+    apiUrl: 'https://blog.srv1109011.hstgr.cloud/api/',
+    storageUrl: 'https://blog.srv1109011.hstgr.cloud/storage/'
 };
