@@ -35,7 +35,7 @@
         <div class="news">
           @if (this.dashboardSuperAdmin.recent_news.length > 0) {
             @for (news of this.dashboardSuperAdmin.recent_news; track $index) {
-              <a href="">{{ news.title }}</a>
+              <a href="admin/noticias/editar/{{ news.id }}">{{ news.title }}</a>
             }
           } @else {
             <p>Nenhuma notícia recente</p>

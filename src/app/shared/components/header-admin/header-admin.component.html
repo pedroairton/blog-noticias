@@ -15,6 +15,7 @@
     </nav>
     <a href="admin/perfil" class="perfil">
         <img src="" alt="" class="img-perfil">
-        <p>Nome do usuário</p>
+        <p>{{ name }}</p>
     </a>
+    <button (click)="logout()" class="logout">Logout</button>
 </div>

@@ -24,10 +24,22 @@
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
-                p{
+                overflow-y: scroll;
+                height: 160px;
+                background-color: #f0f0f0;
+                a{
+                    border-top: solid 1px #dadada;
+                    border-bottom: solid 1px #dadada;
+                    background-color: white;
                     font-size: 1rem;
                     color: #333;
                     font-weight: 400;
+                    padding-left: 0.5rem;
+                    border-left: solid 4px #12244E;
+                    transition: .3s;
+                    &:hover{
+                        border-left: solid 4px #2c53af;
+                    }
                 }
             }
         }

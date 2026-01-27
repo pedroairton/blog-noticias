@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-header-admin',
@@ -7,5 +8,23 @@ import { Component } from '@angular/core';
   styleUrl: './header-admin.component.scss'
 })
 export class HeaderAdminComponent {
-
+  authService = inject(AuthService)
+  name = 'Usuário'
+  logout() {
+    if (confirm('Deseja realmente sair?')) {
+      this.authService.logout()
+    }
+  }
+  getName(){
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        this.name = user.name
+      } else {
+        this.name = 'Usuário'
+      }
+    })
+  }
+  // constructor() {
+  //   this.getName()
+  // }
 }
