@@ -6,6 +6,7 @@ section.page-home {
   align-items: center;
   gap: 80px;
   padding-top: 1rem;
+  margin-top: 180px;
   h1 {
     font-size: 3rem;
     display: flex;
@@ -247,6 +248,35 @@ section.page-home {
             transition: 0.3s;
           }
         }
+      }
+    }
+  }
+}
+@media (max-width: 1600px) {
+  section.page-home {
+    width: 95%;
+  }
+}
+@media (max-width: 1024px) {
+  section.page-home {
+    margin-top: 230px;
+    gap: 50px;
+    .ultimas-noticias {
+      grid-template-columns: repeat(1, 1fr) !important;
+      grid-template-rows: auto;
+      grid-auto-flow: row;
+      justify-items: center;
+      .noticia {
+        width: 80%;
+        // flex-direction: column;
+        grid-row: auto !important;
+      }
+    }
+    .noticias {
+      grid-template-columns: repeat(1, 1fr) !important;
+      justify-items: center;
+      .noticia {
+        width: 80%;
       }
     }
   }

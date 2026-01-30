@@ -42,3 +42,21 @@ footer{
         }
     }
 }
+@media (max-width: 1600px){
+    footer{
+        .conteudo-footer{
+            grid-template-columns: 1fr 3fr 1fr;
+        }
+        .redes{
+            justify-content: center;
+        }
+    }
+}
+@media (max-width: 768px){
+    footer{
+        .conteudo-footer{
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+}
