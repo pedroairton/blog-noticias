@@ -225,3 +225,34 @@
     }
   }
 }
+@media (max-width: 1368px){
+  section.page-noticia{
+    width: 95%;
+    .cabecalho{
+      .titulo-noticia{
+        font-size: 3.5rem;
+      }
+      .subtitulo-noticia{
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+@media (max-width: 768px){
+  section.page-noticia{
+    .cabecalho{
+      .titulo-noticia{
+        font-size: 2rem;
+      }
+      .subtitulo-noticia{
+        font-size: 1rem;
+      }
+    }
+  }
+}
+@media (max-width: 580px){
+  section.page-noticia{
+    width: 95%;
+    margin-top: 250px;
+  }
+}

@@ -281,3 +281,34 @@ section.page-home {
     }
   }
 }
+@media (max-width: 580px) {
+  section.page-home {
+    h1{
+      font-size: 2rem;
+    }
+    .ultimas-noticias {
+      .noticia {
+        width: 95%;
+        flex-direction: column;
+        .infos-noticia {
+          flex: unset !important;
+          .img-noticia {
+            flex: unset !important;
+          }
+        }
+      }
+    }
+    .noticias {
+      .noticia {
+        width: 95%;
+        flex-direction: column;
+        .infos-noticia {
+          flex: unset !important;
+          .img-noticia {
+            flex: unset !important;
+          }
+        }
+      }
+    }
+  }
+}
