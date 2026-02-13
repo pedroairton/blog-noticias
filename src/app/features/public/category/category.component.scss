@@ -58,3 +58,36 @@
     }
   }
 }
+
+@media (max-width: 1024px){
+  .page-categoria{
+    margin-top: 230px;
+    gap: 50px;
+    .noticias {
+      grid-template-columns: repeat(1, 1fr) !important;
+      justify-items: center;
+      .noticia {
+        width: 80%;
+      }
+    }
+  }
+}
+@media (max-width: 580px){
+  .page-categoria{
+    h1{
+      font-size: 2rem;
+    }
+    .noticias {
+      .noticia {
+        width: 95%;
+        flex-direction: column;
+        .infos-noticia {
+          flex: unset !important;
+          .img-noticia {
+            flex: unset !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -55,3 +55,8 @@ mat-error {
 mat-hint {
   color: #505050 !important;
 }
+@media (max-width: 1600px) {
+  section {
+    width: 95%;
+  }
+}
