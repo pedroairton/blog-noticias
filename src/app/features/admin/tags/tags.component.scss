@@ -54,3 +54,20 @@
     }
   }
 }
+
+@media (max-width: 1024px){
+  .tags{
+    .lista-tags{
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 580px){
+  .tags{
+    .topo{
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+}

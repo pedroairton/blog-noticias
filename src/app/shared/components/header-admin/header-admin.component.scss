@@ -28,6 +28,33 @@
             font-size: 0.875rem;
         }
     }
+    .btn-mobile{
+        width: 45px;
+        height: 45px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 15%;
+        right: 1px;
+        translate: 100% -15%;
+        padding: 0.5rem;
+        cursor: pointer;
+        background-color: #12244E;
+        color: white;
+        font-size: 1.75rem;
+        border-radius: 0 3px 3px 0;
+        svg{
+            transition: .2s;
+        }
+    }
+    &.mobile{
+        .btn-mobile{
+            svg{
+                rotate: 180deg;
+            }
+        }
+    }
     nav{
         display: flex;
         flex-direction: column;
@@ -70,5 +97,18 @@
         font-size: 1.15rem;
         text-transform: uppercase;
         cursor: pointer;
+    }
+}
+@media (max-width: 1024px){
+    .sidebar{
+        position: fixed;
+        translate: -100% 0;
+        transition: .3s ease;
+        .btn-mobile{
+            display: flex;
+        }
+        &.mobile{
+            translate: 0 0;
+        }
     }
 }

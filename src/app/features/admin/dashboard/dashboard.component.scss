@@ -45,3 +45,20 @@
         }
     }
 }
+
+@media (max-width: 1024px){
+    .dashboard{
+        .itens-dashboard{
+            grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+            .item {
+                h3{
+                    font-size: 1rem;
+                    text-align: center;
+                }
+                p{
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+}

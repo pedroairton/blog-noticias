@@ -24,7 +24,7 @@
     gap: 1rem;
     .admins {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 1rem;
       .admin {
         padding: 1rem;
@@ -105,6 +105,20 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 580px){
+  .page-admins{
+    .topo{
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lista-admins{
+      .admins{
+        grid-template-columns: 1fr;
       }
     }
   }

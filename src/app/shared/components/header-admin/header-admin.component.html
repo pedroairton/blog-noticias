@@ -1,21 +1,35 @@
-<div class="sidebar">
-    <div class="infos">
-        <img src="" alt="" class="img-painel">
-        <div class="infos-painel">
-            <h2>Painel de administrador</h2>
-            <p>Sistema de Gestão</p>
-        </div>
+<div class="sidebar" [class.mobile]="mobile">
+  <div class="infos">
+    <img src="" alt="" class="img-painel" />
+    <div class="infos-painel">
+      <h2>Painel de administrador</h2>
+      <p>Sistema de Gestão</p>
     </div>
-    <nav>
-        <a href="admin/dashboard">Dashboard</a>
-        <a href="admin/noticias">Notícias</a>
-        <a href="admin/categorias">Categorias</a>
-        <a href="admin/tags">Tags</a>
-        <a href="admin/admins">Usuários</a>
-    </nav>
-    <a href="admin/perfil" class="perfil">
-        <img src="" alt="" class="img-perfil">
-        <p>{{ name }}</p>
-    </a>
-    <button (click)="logout()" class="logout">Logout</button>
+  </div>
+  <button (click)="mobile = !mobile" class="btn-mobile">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="white"
+      class="bi bi-caret-right-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+      />
+    </svg>
+  </button>
+  <nav>
+    <a href="admin/dashboard">Dashboard</a>
+    <a href="admin/noticias">Notícias</a>
+    <a href="admin/categorias">Categorias</a>
+    <a href="admin/tags">Tags</a>
+    <a href="admin/admins">Usuários</a>
+  </nav>
+  <a href="admin/perfil" class="perfil">
+    <img src="" alt="" class="img-perfil" />
+    <p>{{ name }}</p>
+  </a>
+  <button (click)="logout()" class="logout">Logout</button>
 </div>

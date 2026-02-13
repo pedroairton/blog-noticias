@@ -57,6 +57,11 @@ mat-hint {
 }
 @media (max-width: 1600px) {
   section {
-    width: 95%;
+    width: 95% !important;
+  }
+}
+@media (max-width: 1024px) {
+  section.admin {
+    padding: 2rem 0 !important;
   }
 }

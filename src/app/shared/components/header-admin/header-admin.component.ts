@@ -8,8 +8,13 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './header-admin.component.scss'
 })
 export class HeaderAdminComponent {
+  mobile: boolean = false;
   authService = inject(AuthService)
   name = 'Usuário'
+
+  toggleMenu() {
+    this.mobile = !this.mobile
+  }
   logout() {
     if (confirm('Deseja realmente sair?')) {
       this.authService.logout()

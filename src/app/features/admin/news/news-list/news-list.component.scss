@@ -32,10 +32,10 @@
     width: 100%;
     display: grid;
     justify-items: center;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
     .noticia {
-      width: 320px;
+      width: 100%;
       background-color: #f0f0f0;
       border-radius: 5px;
       padding: 1rem;
@@ -156,6 +156,25 @@
           color: white;
           &:hover {
             background-color: #c20000;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px){
+  .news-list{
+    .topo{
+      flex-direction: column;
+      .btns{
+        gap: 0.5rem;
+        flex-direction: column;
+        a{
+          width: 100%;
+          button{
+            width: 100%;
+            font-size: 0.875rem;
           }
         }
       }
