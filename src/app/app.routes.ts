@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
+import { newsDetailResolver } from './core/resolvers/news-detail.resolver';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,9 @@ export const routes: Routes = [
       import('./features/public/news-detail/news-detail.component').then(
         (m) => m.NewsDetailComponent,
       ),
+    resolve: {
+      news: newsDetailResolver,
+    },
   },
   {
     path: 'categoria/:slug',
