@@ -7,5 +7,7 @@ export const newsDetailResolver: ResolveFn<any> = (route) => {
 
   const slug = route.paramMap.get('slug')!;
 
+   console.log('SSR SLUG:', slug);
+
   return newsService.getNewsBySlug(slug);
 };
