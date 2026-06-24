@@ -3,7 +3,7 @@ import { NewsService } from '../../../core/services/news.service';
 import { News } from '../../../core/models/news.model';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { formatDateToBR } from '../../../core/utils/functions';
 
 @Component({
@@ -19,6 +19,8 @@ export class NewsDetailComponent {
   slug: string;
   storageUrl: string = environment.storageUrl
   moreNews: News[] = []
+  private titleService = inject(Title)
+  private metaService = inject(Meta)
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer){
     this.slug = this.route.snapshot.paramMap.get('slug') as string;
@@ -27,6 +29,13 @@ export class NewsDetailComponent {
         console.log(news)
         this.newsDetail = news;
         this.incrementView(news.id);
+        this.titleService.setTitle(`${news.title}`);
+        this.metaService.addTag({name: 'title', content: `${news.title}`});
+        this.metaService.addTag({name: 'og:title', content: `${news.title}`});
+        this.metaService.addTag({name: 'description', content: `${news.subtitle || ''}`});
+        this.metaService.addTag({name: 'og:description', content: `${news.subtitle || ''}`});
+        this.metaService.addTag({name: 'og:image', content: `${environment.storageUrl}/${news.main_image}`});
+        this.metaService.addTag({name: 'og:image:secure_url', content: `${environment.storageUrl}/${news.main_image}`});
       }, error: (error) => {
         console.error(error);
       }
